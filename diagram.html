@@ -1321,6 +1321,7 @@ function setStatus(text, cls) {
 async function runSimulation() {
     if (simRunning) return;
     simRunning = true;
+    if (window.echTrack) echTrack('sim_run');
     resetAll(true);
     const btn = document.getElementById('btnSimulate');
     btn.disabled = true;
@@ -1408,6 +1409,7 @@ function showReadout() {
 async function runIncident() {
     if (incidentRunning || simRunning) return;
     incidentRunning = true;
+    if (window.echTrack) echTrack('incident_' + currentScenario);
     resetAll(true);
     showReadout();
     document.getElementById('btnIncident').disabled = true;
@@ -1576,6 +1578,7 @@ document.querySelector('.hero-scroll').addEventListener('click', () => {
 window.addEventListener('load', () => { setTimeout(drawFan, 120); tickClock(); setInterval(tickClock, 1000); });
 window.addEventListener('resize', drawFan);
 </script>
+<script src="logger.js"></script>
 <script src="effects.js"></script>
 </body>
 </html>

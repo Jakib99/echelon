@@ -223,35 +223,40 @@
             margin-bottom: 28px;
             flex-wrap: wrap;
         }
+        /* Primary action — bright filled button so it pops on the dark page */
         .btn-simulate {
+            font-family: var(--mono);
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 13px 28px;
+            background: linear-gradient(180deg, #38bdf8 0%, var(--accent) 100%);
+            border: 1px solid #5cc6f5;
+            border-radius: 6px;
+            color: #04121f;
+            cursor: pointer;
+            box-shadow: 0 0 0 1px rgba(14,165,233,0.35), 0 6px 22px rgba(14,165,233,0.4);
+            transition: box-shadow 0.15s, transform 0.1s, filter 0.15s;
+        }
+        .btn-simulate:hover { filter: brightness(1.08); box-shadow: 0 0 0 1px rgba(92,198,245,0.6), 0 8px 30px rgba(14,165,233,0.55); transform: translateY(-1px); }
+        .btn-simulate:active { transform: translateY(0); }
+        .btn-simulate:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; filter: grayscale(0.3); }
+        /* Secondary action — clearly outlined surface button, bright text */
+        .btn-reset {
             font-family: var(--mono);
             font-size: 11px;
             font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            padding: 12px 26px;
-            background: rgba(14,165,233,0.12);
-            border: 1px solid var(--accent-border);
-            border-radius: 5px;
-            color: var(--accent);
-            cursor: pointer;
-            transition: background 0.15s, box-shadow 0.15s;
-        }
-        .btn-simulate:hover { background: rgba(14,165,233,0.2); box-shadow: 0 0 24px rgba(14,165,233,0.15); }
-        .btn-simulate:disabled { opacity: 0.4; cursor: not-allowed; }
-        .btn-reset {
-            font-family: var(--mono);
-            font-size: 10.5px;
             letter-spacing: 1.5px;
-            padding: 12px 18px;
-            background: transparent;
+            padding: 13px 20px;
+            background: var(--surface-3);
             border: 1px solid var(--border-2);
-            border-radius: 5px;
-            color: var(--text-muted);
+            border-radius: 6px;
+            color: var(--text-bright);
             cursor: pointer;
-            transition: color 0.15s, border-color 0.15s;
+            transition: color 0.15s, border-color 0.15s, background 0.15s;
         }
-        .btn-reset:hover { color: var(--text-bright); border-color: var(--accent-border); }
+        .btn-reset:hover { color: #fff; border-color: var(--accent-border); background: var(--surface-2); }
         .sim-status {
             font-family: var(--mono);
             font-size: 10.5px;
@@ -678,6 +683,157 @@
             .diagram-frame { padding: 18px; }
             .cover-top { padding: 14px 18px; }
         }
+
+        /* ════════════════════════════════════════════════════
+           INCIDENT SIMULATOR (within the diagram)
+        ════════════════════════════════════════════════════ */
+        .incident-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin: -8px 0 26px;
+            padding: 14px 18px;
+            border: 1px solid var(--border-2);
+            border-radius: 8px;
+            background: var(--surface);
+        }
+        .incident-label {
+            font-family: var(--mono);
+            font-size: 9.5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .scenario-tabs { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+        .scenario-tab {
+            font-family: var(--mono);
+            font-size: 10.5px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            padding: 9px 15px;
+            background: var(--surface-3);
+            border: 1px solid var(--border-2);
+            border-radius: 5px;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .scenario-tab:hover { color: var(--text-bright); border-color: var(--accent-border); }
+        .scenario-tab.active {
+            background: var(--accent-dim);
+            border-color: var(--accent);
+            color: var(--text-heading);
+            box-shadow: 0 0 0 1px rgba(14,165,233,0.2);
+        }
+        .btn-incident {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 11px 22px;
+            background: linear-gradient(180deg, #fca5a5 0%, #ef4444 100%);
+            border: 1px solid #f87171;
+            border-radius: 6px;
+            color: #1a0606;
+            cursor: pointer;
+            box-shadow: 0 4px 18px rgba(239,68,68,0.32);
+            transition: box-shadow 0.15s, transform 0.1s, filter 0.15s;
+        }
+        .btn-incident:hover { filter: brightness(1.08); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(239,68,68,0.45); }
+        .btn-incident:active { transform: translateY(0); }
+        .btn-incident:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(0.3); box-shadow: none; }
+
+        /* Live incident readout tiles */
+        .incident-readout {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 0 0 22px;
+        }
+        .ir-tile {
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: var(--surface-2);
+            padding: 12px 14px;
+            transition: border-color 0.25s, background 0.25s;
+        }
+        .ir-tile.hot { border-color: var(--red); background: rgba(239,68,68,0.06); }
+        .ir-tile.good { border-color: var(--green); background: rgba(16,208,112,0.06); }
+        .ir-label {
+            font-family: var(--mono);
+            font-size: 8.5px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 7px;
+        }
+        .ir-val { font-size: 14px; font-weight: 700; color: var(--text-heading); font-family: var(--mono); }
+        .ir-val.danger { color: #f87171; }
+        .ir-val.ok { color: var(--green); }
+        .ir-tile.verdict { grid-column: span 1; }
+        .ir-tile.verdict .ir-val { font-size: 11.5px; font-weight: 600; line-height: 1.45; color: var(--text-bright); }
+
+        /* Node incident visual states */
+        .diag-node.failed { border-color: var(--red) !important; box-shadow: 0 0 20px rgba(239,68,68,0.3) !important; animation: node-shake 0.4s ease; }
+        .diag-node.failed .node-status-dot { background: var(--red); animation: pulse-red 0.9s infinite; }
+        .diag-node.offline-state { border-color: #f59e0b !important; border-style: dashed; box-shadow: 0 0 16px rgba(245,158,11,0.2) !important; }
+        .diag-node.offline-state .node-status-dot { background: #f59e0b; animation: pulse-red 1.6s infinite; }
+        .diag-node.vulnerable { border-color: #eab308 !important; box-shadow: 0 0 14px rgba(234,179,8,0.18) !important; }
+        .diag-node.vulnerable .node-status-dot { background: #eab308; }
+        .diag-node.recovered { border-color: var(--green) !important; box-shadow: 0 0 24px rgba(16,208,112,0.4) !important; }
+        .diag-node.recovered .node-status-dot { background: var(--green); }
+        @keyframes node-shake {
+            0%,100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
+        }
+        .hq-card-alert { animation: hq-flash 0.8s ease-in-out 3; }
+        @keyframes hq-flash {
+            0%,100% { box-shadow: 0 0 0 1px var(--accent-border); }
+            50% { box-shadow: 0 0 22px rgba(14,165,233,0.45); border-color: var(--accent); }
+        }
+
+        /* ════════════════════════════════════════════════════
+           OLD WAY vs NEW WAY COMPARISON
+        ════════════════════════════════════════════════════ */
+        .compare-section { max-width: 1280px; margin: 0 auto; padding: 30px 32px 20px; }
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1.4fr 1.4fr;
+            border: 1px solid var(--border-2);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--surface);
+        }
+        .compare-grid > div { padding: 16px 18px; border-bottom: 1px solid var(--border); }
+        .ch { /* column header */
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            position: sticky; top: 0;
+        }
+        .ch.dim { color: var(--text-muted); }
+        .ch.old { color: #f87171; }
+        .ch.new { color: var(--green); }
+        .compare-grid .col-old { background: rgba(239,68,68,0.035); border-left: 1px solid var(--border); }
+        .compare-grid .col-new { background: rgba(16,208,112,0.04); border-left: 1px solid var(--border); }
+        .crow-label { font-size: 12.5px; font-weight: 600; color: var(--text-bright); }
+        .ccell { font-size: 12px; color: var(--text-muted); line-height: 1.55; display: flex; gap: 8px; }
+        .ccell.old::before { content: '✕'; color: #f87171; font-weight: 700; flex-shrink: 0; }
+        .ccell.new::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+        .ccell .metric { color: var(--text-heading); font-weight: 700; font-family: var(--mono); }
+        .compare-grid > div:nth-last-child(-n+3) { border-bottom: none; }
+        @media (max-width: 760px) {
+            .compare-grid { grid-template-columns: 1fr; }
+            .compare-grid .col-old, .compare-grid .col-new { border-left: none; }
+            .crow-label { margin-top: 6px; }
+            .incident-readout { grid-template-columns: repeat(2, 1fr); }
+        }
     </style>
 </head>
 <body class="cover">
@@ -713,11 +869,11 @@
 
     <div class="hero-meta">
         <div class="hero-meta-item">
-            <div class="hero-meta-val">5,000+</div>
+            <div class="hero-meta-val"><span data-count="5000" data-format="comma">0</span>+</div>
             <div class="hero-meta-label">Managed Nodes</div>
         </div>
         <div class="hero-meta-item">
-            <div class="hero-meta-val">&lt;30<span style="font-size:13px;">min</span></div>
+            <div class="hero-meta-val">&lt;<span data-count="30">0</span><span style="font-size:13px;">min</span></div>
             <div class="hero-meta-label">Fleet Rollout</div>
         </div>
         <div class="hero-meta-item">
@@ -725,7 +881,7 @@
             <div class="hero-meta-label">Downtime</div>
         </div>
         <div class="hero-meta-item">
-            <div class="hero-meta-val">100%</div>
+            <div class="hero-meta-val"><span data-count="100">0</span>%</div>
             <div class="hero-meta-label">Audited</div>
         </div>
     </div>
@@ -741,13 +897,42 @@
     <div class="section-banner">
         <div class="sb-eyebrow">Interactive System Map</div>
         <h2>The architecture, end to end</h2>
-        <p>Click any component to inspect it. Or run a simulated deployment to watch the system move software from HQ to every node in real time.</p>
+        <p>Click any component to inspect it. Run a simulated deployment to watch software move from HQ to every node — or trigger an incident and see how ECHELON contains it.</p>
     </div>
 
     <div class="diagram-controls">
         <button class="btn-simulate" id="btnSimulate" onclick="runSimulation()">&#9654;&nbsp;&nbsp;Simulate Deployment</button>
         <button class="btn-reset" onclick="resetAll()">Reset</button>
         <span class="sim-status" id="simStatus"></span>
+    </div>
+
+    <div class="incident-bar">
+        <span class="incident-label">Or simulate an incident</span>
+        <div class="scenario-tabs">
+            <button class="scenario-tab active" data-sc="bad-update" onclick="pickScenario('bad-update', this)">Bad Update</button>
+            <button class="scenario-tab" data-sc="offline" onclick="pickScenario('offline', this)">Node Offline</button>
+            <button class="scenario-tab" data-sc="patch" onclick="pickScenario('patch', this)">Security Patch</button>
+        </div>
+        <button class="btn-incident" id="btnIncident" onclick="runIncident()">&#9654;&nbsp;&nbsp;Run Incident</button>
+    </div>
+
+    <div class="incident-readout" id="incidentReadout" style="display:none;">
+        <div class="ir-tile" id="irTileStatus">
+            <div class="ir-label">Status</div>
+            <div class="ir-val" id="irStatus">—</div>
+        </div>
+        <div class="ir-tile" id="irTileNodes">
+            <div class="ir-label">Nodes affected</div>
+            <div class="ir-val" id="irNodes">0</div>
+        </div>
+        <div class="ir-tile" id="irTileDown">
+            <div class="ir-label">Fleet downtime</div>
+            <div class="ir-val" id="irDowntime">00:00</div>
+        </div>
+        <div class="ir-tile verdict" id="irTileAction">
+            <div class="ir-label">ECHELON response</div>
+            <div class="ir-val" id="irAction">Standing by</div>
+        </div>
     </div>
 
     <div class="diagram-frame">
@@ -898,6 +1083,44 @@
             </div>
 
         </div>
+    </div>
+</div>
+
+<!-- ── OLD WAY vs NEW WAY ── -->
+<div class="compare-section">
+    <div class="section-banner">
+        <div class="sb-eyebrow">Old Way vs New Way</div>
+        <h2>The same problems, two very different outcomes</h2>
+        <p>What running thousands of sites looks like without a platform like ECHELON — and with one.</p>
+    </div>
+    <div class="compare-grid">
+        <div class="ch dim">Situation</div>
+        <div class="ch old col-old">Without ECHELON</div>
+        <div class="ch new col-new">With ECHELON</div>
+
+        <div class="crow-label">Push an update to 5,000 sites</div>
+        <div class="col-old"><div class="ccell old">Manual or risky batch scripts, site by site — <span class="metric">days</span></div></div>
+        <div class="col-new"><div class="ccell new">Automated pipeline, fleet-wide — <span class="metric">&lt;30&nbsp;min</span></div></div>
+
+        <div class="crow-label">A bad update ships</div>
+        <div class="col-old"><div class="ccell old">Breaks sites, found late — all 5,000 at risk, <span class="metric">hours of downtime</span></div></div>
+        <div class="col-new"><div class="ccell new">Caught at the canary gate, auto-rollback in seconds — <span class="metric">blast radius&nbsp;=&nbsp;1&nbsp;node</span></div></div>
+
+        <div class="crow-label">Security vulnerability found</div>
+        <div class="col-old"><div class="ccell old">Patch by hand across every site — <span class="metric">days exposed</span></div></div>
+        <div class="col-new"><div class="ccell new">Signed patch swept fleet-wide — <span class="metric">&lt;30&nbsp;min</span></div></div>
+
+        <div class="crow-label">A site loses its connection</div>
+        <div class="col-old"><div class="ccell old">Goes dark — work stops until someone notices</div></div>
+        <div class="col-new"><div class="ccell new">Keeps running locally, re-syncs automatically on reconnect</div></div>
+
+        <div class="crow-label">"What changed, and when?"</div>
+        <div class="col-old"><div class="ccell old">Reconstruct scattered logs by hand — <span class="metric">weeks</span></div></div>
+        <div class="col-new"><div class="ccell new">Immutable GitOps audit trail — <span class="metric">instant</span></div></div>
+
+        <div class="crow-label">Visibility into the fleet</div>
+        <div class="col-old"><div class="ccell old">No reliable picture of what version each site runs</div></div>
+        <div class="col-new"><div class="ccell new">Live dashboard — every node's status in real time</div></div>
     </div>
 </div>
 
@@ -1136,16 +1359,157 @@ async function runSimulation() {
 function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 function resetAll(keepPanel) {
-    document.querySelectorAll('.lit').forEach(el => el.classList.remove('lit'));
+    document.querySelectorAll('.lit, .failed, .offline-state, .vulnerable, .recovered, .hq-card-alert')
+        .forEach(el => el.classList.remove('lit','failed','offline-state','vulnerable','recovered','hq-card-alert'));
     document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
     setStatus('');
+    const ro = document.getElementById('incidentReadout');
+    if (ro) ro.style.display = 'none';
     if (!keepPanel) {
         document.getElementById('infoDefault').style.display = 'block';
         document.getElementById('infoContent').style.display = 'none';
         document.getElementById('infoPanel').classList.remove('active');
     }
     document.getElementById('btnSimulate').disabled = false;
+    const bi = document.getElementById('btnIncident');
+    if (bi) bi.disabled = false;
     simRunning = false;
+}
+
+// ── Incident Simulator ──────────────────────────────────────
+let currentScenario = 'bad-update';
+let incidentRunning = false;
+
+function pickScenario(sc, btn) {
+    if (incidentRunning) return;
+    currentScenario = sc;
+    document.querySelectorAll('.scenario-tab').forEach(t => t.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+}
+
+function setIR(field, value, cls) {
+    const el = document.getElementById(field);
+    if (!el) return;
+    el.textContent = value;
+    el.className = 'ir-val' + (cls ? ' ' + cls : '');
+}
+function setIRTile(tileId, cls) {
+    const el = document.getElementById(tileId);
+    if (!el) return;
+    el.className = 'ir-tile' + (tileId === 'irTileAction' ? ' verdict' : '') + (cls ? ' ' + cls : '');
+}
+function showReadout() {
+    const ro = document.getElementById('incidentReadout');
+    ro.style.display = 'grid';
+    setIR('irStatus', '—'); setIR('irNodes', '0'); setIR('irDowntime', '00:00'); setIR('irAction', 'Standing by');
+    setIRTile('irTileStatus'); setIRTile('irTileNodes'); setIRTile('irTileDown'); setIRTile('irTileAction');
+}
+
+async function runIncident() {
+    if (incidentRunning || simRunning) return;
+    incidentRunning = true;
+    resetAll(true);
+    showReadout();
+    document.getElementById('btnIncident').disabled = true;
+    document.getElementById('btnSimulate').disabled = true;
+    ['n-1','n-2','n-3'].forEach(id => document.getElementById(id).classList.add('lit'));
+    await wait(450);
+
+    if (currentScenario === 'bad-update') await scenarioBadUpdate();
+    else if (currentScenario === 'offline') await scenarioOffline();
+    else if (currentScenario === 'patch') await scenarioPatch();
+
+    document.getElementById('btnIncident').disabled = false;
+    document.getElementById('btnSimulate').disabled = false;
+    incidentRunning = false;
+}
+
+async function scenarioBadUpdate() {
+    const node = document.getElementById('n-2'); // Miami
+    setStatus('Rolling out update v2.4.1 to the fleet...', 'running');
+    setIR('irStatus', 'Rolling out');
+    await wait(1100);
+
+    node.classList.remove('lit'); node.classList.add('failed');
+    setStatus('⚠ HEALTH CHECK FAILED — NODE-002 (Miami) is crashing on v2.4.1', 'running');
+    setIR('irStatus', 'Failure detected', 'danger'); setIRTile('irTileStatus', 'hot');
+    setIR('irNodes', '1');
+    await wait(1500);
+
+    document.getElementById('c-echelon').classList.add('hq-card-alert');
+    document.getElementById('p-05').classList.add('lit');
+    setStatus('ECHELON: health gate tripped → rollout paused → rolling NODE-002 back', 'running');
+    setIR('irStatus', 'Auto-rollback', 'danger');
+    setIR('irAction', 'Health gate tripped — fleet rollout paused, node rolled back to v2.4.0');
+    await wait(1800);
+
+    node.classList.remove('failed'); node.classList.add('recovered');
+    setIRTile('irTileStatus', 'good');
+    setIR('irStatus', 'Contained', 'ok');
+    setIR('irDowntime', '00:00', 'ok'); setIRTile('irTileDown', 'good');
+    setIR('irAction', 'NODE-002 restored on the last good version. The other 4,999 never received the bad update.');
+    setIRTile('irTileAction', 'good');
+    setStatus('✓ Contained — blast radius 1 node, zero fleet downtime', 'done');
+    await wait(650);
+    node.classList.remove('recovered'); node.classList.add('lit');
+}
+
+async function scenarioOffline() {
+    const node = document.getElementById('n-3'); // Dallas
+    setStatus('Network link to NODE-003 (Dallas) just dropped...', 'running');
+    setIR('irStatus', 'Link lost', 'danger'); setIRTile('irTileStatus', 'hot');
+    node.classList.remove('lit'); node.classList.add('offline-state');
+    setIR('irNodes', '1');
+    setIR('irAction', 'Node keeps serving from its own local Kubernetes cluster — no outage.');
+    await wait(1700);
+
+    setStatus('NODE-003 running autonomously in offline mode...', 'running');
+    setIR('irStatus', 'Running offline');
+    setIR('irDowntime', '00:00', 'ok'); setIRTile('irTileDown', 'good');
+    await wait(1600);
+
+    setStatus('Connection restored → ECHELON re-syncing NODE-003 to current state...', 'running');
+    setIR('irStatus', 'Re-syncing');
+    document.getElementById('c-echelon').classList.add('hq-card-alert');
+    await wait(1500);
+
+    node.classList.remove('offline-state'); node.classList.add('recovered');
+    setIRTile('irTileStatus', 'good');
+    setIR('irStatus', 'Back in sync', 'ok');
+    setIR('irAction', 'Caught up to the current fleet state automatically. Zero data loss, zero downtime.');
+    setIRTile('irTileAction', 'good');
+    setStatus('✓ NODE-003 operated through the outage and re-synced — no downtime', 'done');
+    await wait(650);
+    node.classList.remove('recovered'); node.classList.add('lit');
+}
+
+async function scenarioPatch() {
+    setStatus('⚠ Critical CVE disclosed — it affects every node in the fleet', 'running');
+    setIR('irStatus', 'CVE disclosed', 'danger'); setIRTile('irTileStatus', 'hot');
+    ['n-1','n-2','n-3'].forEach(id => { const n = document.getElementById(id); n.classList.remove('lit'); n.classList.add('vulnerable'); });
+    setIR('irNodes', '5,000');
+    setIR('irAction', 'ECHELON builds, hardens and signs the patch automatically...');
+    await wait(1600);
+
+    setStatus('Building + signing patch → distributing fleet-wide', 'running');
+    setIR('irStatus', 'Patching');
+    for (const pid of ['p-01','p-02','p-04','p-05']) { document.getElementById(pid).classList.add('lit'); await wait(330); }
+    document.getElementById('c-echelon').classList.add('hq-card-alert');
+    await wait(450);
+
+    for (const id of ['n-1','n-2','n-3']) {
+        const n = document.getElementById(id);
+        n.classList.remove('vulnerable'); n.classList.add('recovered');
+        await wait(480);
+        n.classList.remove('recovered'); n.classList.add('lit');
+    }
+    setIRTile('irTileStatus', 'good');
+    setIR('irStatus', 'Patched', 'ok');
+    setIR('irNodes', '5,000', 'ok');
+    setIR('irDowntime', '00:00', 'ok'); setIRTile('irTileDown', 'good');
+    setIR('irAction', 'All 5,000 nodes patched and verified in under 30 minutes — no manual work, full audit trail.');
+    setIRTile('irTileAction', 'good');
+    setStatus('✓ Fleet fully patched — under 30 minutes, zero downtime', 'done');
 }
 
 // ── Draw SVG fan lines (HQ → nodes) ─────────────────────────
@@ -1212,5 +1576,6 @@ document.querySelector('.hero-scroll').addEventListener('click', () => {
 window.addEventListener('load', () => { setTimeout(drawFan, 120); tickClock(); setInterval(tickClock, 1000); });
 window.addEventListener('resize', drawFan);
 </script>
+<script src="effects.js"></script>
 </body>
 </html>

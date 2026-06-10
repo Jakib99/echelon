@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECHELON — Access</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <span class="login-logo-dot"></span>
+            Echelon
+        </div>
+        <div class="login-sub">Restricted Platform Access</div>
+        <input type="password" id="pw" placeholder="Enter access key" autocomplete="off" autofocus>
+        <button class="login-btn" onclick="attempt()">Authenticate</button>
+        <div class="login-error" id="err"></div>
+    </div>
+</div>
+
+<script src="auth.js"></script>
+<script src="logger.js"></script>
+<script>
+    if (sessionStorage.getItem('echelon_access') === 'granted') {
+        window.location.href = 'diagram.html';
+    }
+    document.getElementById('pw').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') attempt();
+    });
+    async function attempt() {
+        const pw = document.getElementById('pw').value;
+        const err = document.getElementById('err');
+        if (!pw) return;
+        err.textContent = '';
+        const ok = await login(pw);
+        if (ok) {
+            // Fire-and-log, but never let a slow/blocked logger hold up the redirect.
+            try { await Promise.race([logAccess(), new Promise(r => setTimeout(r, 2500))]); } catch (e) {}
+            window.location.href = 'diagram.html';
+        } else {
+            err.textContent = 'Access denied — invalid key';
+            document.getElementById('pw').value = '';
+            document.getElementById('pw').focus();
+        }
+    }
+</script>
+</body>
+</html>

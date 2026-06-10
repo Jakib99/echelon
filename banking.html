@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECHELON — Banking</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="banking">
+<script src="auth.js"></script>
+<script>checkAuth();</script>
+
+<nav>
+    <div class="nav-inner">
+        <a href="diagram.html" class="nav-logo">
+            <span class="nav-logo-dot"></span>
+            Echelon
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Platform</a>
+            <a href="banking.html" class="active">Banking</a>
+            <a href="govcon.html">GovCon</a>
+            <a href="simple.html">How It Works</a>
+            <div class="nav-divider"></div>
+            <button class="nav-logout" onclick="logout()">Sign out</button>
+        </div>
+    </div>
+</nav>
+
+<div class="page-header">
+    <div class="eyebrow">Sector — Financial Services</div>
+    <h1>ECHELON for Banking.<br>5,000 branches. One platform.</h1>
+    <p>Purpose-built for large financial institutions that need to deploy and manage software across thousands of branch locations — with the compliance controls, zero-downtime guarantees, and audit trail that banking demands.</p>
+</div>
+
+<div class="container">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Use Case</div>
+            <div class="section-title">Built for the complexity of enterprise banking</div>
+            <div class="section-body">A national bank with 5,000 branches can't afford downtime during trading hours, can't risk config drift across thousands of nodes, and can't fail a PCI-DSS audit. ECHELON handles all three by design.</div>
+        </div>
+        <div class="grid-3">
+            <div class="card accent-top">
+                <div class="card-label">Reliability</div>
+                <h3>Zero downtime deployments</h3>
+                <p>Rolling releases with health-gated wave progression. If a branch fails a health check, the rollout pauses and that node rolls back automatically — without touching the rest of the fleet.</p>
+            </div>
+            <div class="card accent-top">
+                <div class="card-label">Compliance</div>
+                <h3>Audit-ready by default</h3>
+                <p>Every deployment logged in an immutable GitOps trail. PCI-DSS and SOX controls enforced at the pipeline level, not bolted on afterward. Evidence packages generated automatically.</p>
+            </div>
+            <div class="card accent-top">
+                <div class="card-label">Scale</div>
+                <h3>Fleet-wide in under 30 minutes</h3>
+                <p>Full rollout to all 5,000 branches — build, harden, transfer, release — in under 30 minutes. Delta-only transfers minimize bandwidth. Regional batching ensures orderly progression.</p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Control Plane</div>
+            <div class="section-title">HQ operations — hosted in Azure Government</div>
+        </div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>Kubernetes Master Cluster</h3>
+                <ul>
+                    <li>Orchestrates all 5,000 branch node workloads</li>
+                    <li>Auto-scales based on concurrent deployment load</li>
+                    <li>Node health monitoring with automatic remediation</li>
+                    <li>RBAC tied to Active Directory and HR systems</li>
+                    <li>Encrypted etcd with HSM-backed key management</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>ECHELON Control</h3>
+                <ul>
+                    <li>Policy engine — PCI-DSS and SOX rules enforced globally</li>
+                    <li>CVE scanning and automated patch sequencing</li>
+                    <li>Live dashboard — status of all 5,000 branches in real time</li>
+                    <li>GitOps audit trail consumable directly by auditors</li>
+                    <li>One-click rollback — per branch or full fleet</li>
+                    <li>SIEM integration for continuous security monitoring</li>
+                </ul>
+            </div>
+        </div>
+        <div class="chip-row">
+            <span class="chip accent">Helm</span>
+            <span class="chip accent">ArgoCD</span>
+            <span class="chip accent">Prometheus</span>
+            <span class="chip accent">Grafana</span>
+            <span class="chip accent">HashiCorp Vault</span>
+            <span class="chip accent">OPA / Gatekeeper</span>
+            <span class="chip accent">Falco</span>
+            <span class="chip">Azure Kubernetes Service</span>
+            <span class="chip">Splunk SIEM</span>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Deployment Pipeline</div>
+            <div class="section-title">Commit to 5,000 branches — automated end to end</div>
+        </div>
+        <div class="pipeline-wrap">
+            <div class="pipeline-track">
+                <div class="pipeline-step">
+                    <div class="step-num">[01]</div>
+                    <div class="step-name">Build</div>
+                    <ul class="step-items">
+                        <li>Unit and integration tests</li>
+                        <li>Container image built</li>
+                        <li>Dependency audit</li>
+                        <li>SBOM generated</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[02]</div>
+                    <div class="step-name">Harden</div>
+                    <ul class="step-items">
+                        <li>CVE and vulnerability scan</li>
+                        <li>Image signed via cosign</li>
+                        <li>PCI-DSS policy enforcement</li>
+                        <li>Secrets injected (Vault)</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[03]</div>
+                    <div class="step-name">Stage</div>
+                    <ul class="step-items">
+                        <li>Canary to 10 pilot branches</li>
+                        <li>Smoke and regression tests</li>
+                        <li>Transaction throughput check</li>
+                        <li>Auto-promote or abort</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[04]</div>
+                    <div class="step-name">Transfer</div>
+                    <ul class="step-items">
+                        <li>Package pushed to registry</li>
+                        <li>GitOps manifest sync</li>
+                        <li>Batched by region</li>
+                        <li>Delta-only transfers</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[05]</div>
+                    <div class="step-name">Release</div>
+                    <ul class="step-items">
+                        <li>Rolling deploy fleet-wide</li>
+                        <li>Zero-downtime switchover</li>
+                        <li>Health gates each wave</li>
+                        <li>Instant rollback on failure</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pipeline-footer">
+                Target: full rollout to all 5,000 branches in under 30 minutes · No manual steps · Full audit trail
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Service Mesh</div>
+            <div class="section-title">Encrypted connectivity — HQ to every branch</div>
+            <div class="section-body">Satisfies PCI-DSS requirements for encrypted transmission of cardholder data in transit and provides the traffic management layer for zero-downtime deployments.</div>
+        </div>
+        <div class="mesh-grid">
+            <div class="mesh-item">
+                <div class="mesh-item-title">Mutual TLS</div>
+                <div class="mesh-item-desc">All traffic encrypted end-to-end. Satisfies PCI-DSS Req 4.2 for cardholder data in transit across all 5,000 branches.</div>
+            </div>
+            <div class="mesh-item">
+                <div class="mesh-item-title">Traffic Control</div>
+                <div class="mesh-item-desc">Canary splits for staged branch rollouts. Circuit breakers prevent cascading failures. Automatic retries for transient network issues.</div>
+            </div>
+            <div class="mesh-item">
+                <div class="mesh-item-title">Observability</div>
+                <div class="mesh-item-desc">Per-branch request metrics, latency, and error rates — fed into a central dashboard and Splunk SIEM in real time.</div>
+            </div>
+            <div class="mesh-item">
+                <div class="mesh-item-title">Instant Rollback</div>
+                <div class="mesh-item-desc">Deploy failure triggers automatic traffic re-weighting within seconds. No teller downtime. No ATM interruption.</div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Edge Nodes</div>
+            <div class="section-title">5,000 branch locations — each fully managed</div>
+            <div class="section-body">Every branch runs a local Kubernetes cluster. Teller systems, ATM software, and fraud detection run locally so branches stay operational even if connectivity to HQ is interrupted.</div>
+        </div>
+        <div class="node-block">
+            <div class="node-block-header">
+                <span>Branch locations</span>
+                <span class="count">5,000 total</span>
+            </div>
+            <div class="node-row">
+                <div class="node-item">
+                    <div class="node-status"></div>
+                    <div class="node-name">Branch #1</div>
+                    <div class="node-sub">New York, NY · IL-NY-001</div>
+                    <div class="node-badge">Local Kubernetes</div>
+                    <ul>
+                        <li>Teller and transaction systems</li>
+                        <li>ATM fleet software</li>
+                        <li>Real-time fraud detection</li>
+                        <li>Offline failover mode</li>
+                        <li>Encrypted local data store</li>
+                    </ul>
+                </div>
+                <div class="node-item">
+                    <div class="node-status"></div>
+                    <div class="node-name">Branch #2</div>
+                    <div class="node-sub">Miami, FL · IL-FL-002</div>
+                    <div class="node-badge">Local Kubernetes</div>
+                    <ul>
+                        <li>Teller and transaction systems</li>
+                        <li>ATM fleet software</li>
+                        <li>Real-time fraud detection</li>
+                        <li>Offline failover mode</li>
+                        <li>Encrypted local data store</li>
+                    </ul>
+                </div>
+                <div class="node-item">
+                    <div class="node-status"></div>
+                    <div class="node-name">Branch #3</div>
+                    <div class="node-sub">Dallas, TX · IL-TX-003</div>
+                    <div class="node-badge">Local Kubernetes</div>
+                    <ul>
+                        <li>Teller and transaction systems</li>
+                        <li>ATM fleet software</li>
+                        <li>Real-time fraud detection</li>
+                        <li>Offline failover mode</li>
+                        <li>Encrypted local data store</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="node-more">+ 4,997 additional branches — each running an identical ECHELON-managed Kubernetes stack</div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Compliance</div>
+            <div class="section-title">Regulatory frameworks — satisfied by design</div>
+            <div class="section-body">Controls are built into the pipeline and cluster configuration. Auditors pull evidence directly from the system — no manual documentation required.</div>
+        </div>
+        <div class="compliance-wrap">
+            <table class="compliance-table">
+                <thead>
+                    <tr>
+                        <th>Framework</th>
+                        <th>How ECHELON satisfies it</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PCI-DSS v4.0</td>
+                        <td>Network segmentation via service mesh (Req 1); mTLS for cardholder data in transit (Req 4.2); RBAC and least privilege (Req 7); immutable audit log for all system changes (Req 10); automated vulnerability scanning on every build (Req 11).</td>
+                    </tr>
+                    <tr>
+                        <td>SOX (ITGC)</td>
+                        <td>All changes flow through GitOps — no untracked modifications possible. Separation of duties enforced via RBAC. Change log is immutable and auditor-readable. Instant rollback preserves traceability of every state change.</td>
+                    </tr>
+                    <tr>
+                        <td>FFIEC / GLBA</td>
+                        <td>Runtime threat detection via Falco. CVE patching automated and timestamped. Incident response hooks integrated with SIEM. Data residency controls enforced at the mesh layer per region.</td>
+                    </tr>
+                    <tr>
+                        <td>NIST CSF</td>
+                        <td>Continuous monitoring (Detect); automated patch management (Protect); rollback and incident response integration (Respond); GitOps history as recovery baseline (Recover).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div class="page-footer">
+    <span>Echelon · Financial Services · Confidential</span>
+    <span class="footer-status">All systems operational</span>
+</div>
+
+</body>
+</html>

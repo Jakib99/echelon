@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECHELON — How It Works</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="auth.js"></script>
+<script>checkAuth();</script>
+
+<nav>
+    <div class="nav-inner">
+        <a href="diagram.html" class="nav-logo">
+            <span class="nav-logo-dot"></span>
+            Echelon
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Platform</a>
+            <a href="banking.html">Banking</a>
+            <a href="govcon.html">GovCon</a>
+            <a href="simple.html" class="active">How It Works</a>
+            <div class="nav-divider"></div>
+            <button class="nav-logout" onclick="logout()">Sign out</button>
+        </div>
+    </div>
+</nav>
+
+<div class="page-header">
+    <div class="eyebrow">Plain Language Overview</div>
+    <h1>What ECHELON is.<br>What it does. Why it matters.</h1>
+    <p>No technical background required. This page explains the whole platform from the ground up in plain terms.</p>
+</div>
+
+<div class="container">
+
+    <!-- The Problem -->
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">The Problem</div>
+            <div class="section-title">What happens without ECHELON</div>
+            <div class="section-body">Start here. Before you can understand what ECHELON does, you need to understand what problem it solves.</div>
+        </div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>Imagine a company with 5,000 locations</h3>
+                <p style="line-height:1.85;">Every location runs software — the programs that let employees do their jobs. Teller systems at a bank. Logistics software at a warehouse. Mission tools at a military base. Whatever it is, it has to work, it has to be up to date, and it can never go down during business hours.</p>
+                <p style="margin-top:12px; line-height:1.85;">Now imagine that software needs an update. Without a system like ECHELON, someone has to push that update to all 5,000 locations — one by one, or in risky batches. If something goes wrong at location #3,000, how do you even know? How do you fix it? How long does it take?</p>
+            </div>
+            <div class="card">
+                <h3>The four things that go wrong</h3>
+                <ul>
+                    <li>A location runs an old version of the software and nobody notices for weeks</li>
+                    <li>An update breaks something at one location and takes hours to manually fix</li>
+                    <li>A security vulnerability is found — and patching 5,000 locations by hand takes days</li>
+                    <li>An auditor asks for a log of every change ever made, and no clean record exists</li>
+                </ul>
+                <p style="margin-top:14px; line-height:1.85; color: var(--text-muted);">These are not edge cases. They happen constantly at large organizations without the right infrastructure. ECHELON exists to make all four of them impossible.</p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- What ECHELON is -->
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">The Simple Version</div>
+            <div class="section-title">What ECHELON actually is</div>
+        </div>
+        <div class="card accent-top" style="max-width: 820px;">
+            <p style="font-size:15px; line-height:2; color: var(--text-bright);">
+                ECHELON is a system that lets one team — sitting in one place — control the software running at thousands of locations simultaneously. They can push an update, and it reaches every location safely, in the right order, with automatic checks along the way. If anything goes wrong at any location, that location rolls back to the previous version on its own — without anyone having to touch it.
+            </p>
+        </div>
+        <p style="margin-top: 20px; font-size: 13px; color: var(--text-muted); max-width: 680px; line-height: 1.85;">
+            Think of it like this: a commercial airline can push a software update to every plane in its fleet from a single operations center. Every plane gets the same update, in the right sequence, with built-in verification. If one plane has a problem, it stays on the old version while the rest continue. That's what ECHELON does — but for any organization with distributed locations.
+        </p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- The 3 parts -->
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">The Three Parts</div>
+            <div class="section-title">How the system is built</div>
+            <div class="section-body">ECHELON has three components that work together. Each one has a specific job.</div>
+        </div>
+        <div class="grid-3">
+            <div class="card accent-top">
+                <div class="card-label">Part 01</div>
+                <h3>Headquarters</h3>
+                <p style="line-height:1.85;">This is where everything is controlled from. One team, one dashboard, full visibility into every location at once. When a software update is ready, HQ is where it gets reviewed, tested, and approved before anything is sent out. HQ also enforces the rules — every location has to meet the same security and compliance standards, and HQ makes sure they do.</p>
+                <p style="margin-top: 12px; line-height:1.85; color: var(--text-muted);">If something goes wrong anywhere in the fleet, HQ sees it immediately and can issue a rollback in seconds.</p>
+            </div>
+            <div class="card accent-top">
+                <div class="card-label">Part 02</div>
+                <h3>The Pipeline</h3>
+                <p style="line-height:1.85;">Before any software reaches a single location, it has to pass through a series of automated checks. Think of it like a security screening line at an airport. The software goes through testing, vulnerability scanning, policy verification, and gets digitally signed — proving it hasn't been tampered with.</p>
+                <p style="margin-top: 12px; line-height:1.85; color: var(--text-muted);">Nothing that fails a check can move forward. This means bad or vulnerable software is stopped before it ever reaches a real location.</p>
+            </div>
+            <div class="card accent-top">
+                <div class="card-label">Part 03</div>
+                <h3>The Local Node</h3>
+                <p style="line-height:1.85;">Each location — whether it's a bank branch, a military base, or a remote office — runs its own mini version of the system locally. This means the location keeps working even if it loses its internet connection to HQ. When the connection comes back, it automatically syncs and catches up.</p>
+                <p style="margin-top: 12px; line-height:1.85; color: var(--text-muted);">The local node also monitors itself. If a new update causes a problem, it rolls back without waiting for a human to notice.</p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- The Pipeline walkthrough -->
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Step by Step</div>
+            <div class="section-title">What happens when a software update is released</div>
+            <div class="section-body">Here is exactly what happens, in order, from the moment a developer finishes writing code to the moment it's running at every location.</div>
+        </div>
+        <div class="pipeline-wrap">
+            <div class="pipeline-track">
+                <div class="pipeline-step">
+                    <div class="step-num">[01]</div>
+                    <div class="step-name">Build</div>
+                    <ul class="step-items">
+                        <li>The software is packaged up</li>
+                        <li>Automated tests run to make sure it works</li>
+                        <li>A full list of everything inside it is recorded</li>
+                        <li>If tests fail, the process stops here</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[02]</div>
+                    <div class="step-name">Harden</div>
+                    <ul class="step-items">
+                        <li>Security scans check for known vulnerabilities</li>
+                        <li>The package is digitally signed — like a tamper seal</li>
+                        <li>Compliance rules are checked automatically</li>
+                        <li>Any issue found here blocks the release</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[03]</div>
+                    <div class="step-name">Stage</div>
+                    <ul class="step-items">
+                        <li>The update goes to a small group of locations first</li>
+                        <li>The system watches for any problems</li>
+                        <li>If everything looks good, it proceeds automatically</li>
+                        <li>If not, it stops before reaching everyone else</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[04]</div>
+                    <div class="step-name">Transfer</div>
+                    <ul class="step-items">
+                        <li>The package is distributed to all locations</li>
+                        <li>Only the parts that changed are sent — not the whole thing</li>
+                        <li>Every location verifies what it received is unmodified</li>
+                        <li>Locations are updated in logical groups, not all at once</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[05]</div>
+                    <div class="step-name">Release</div>
+                    <ul class="step-items">
+                        <li>The update goes live at each location with no downtime</li>
+                        <li>The old version stays available in case it's needed</li>
+                        <li>Each location confirms it's healthy before the next batch proceeds</li>
+                        <li>Any failure triggers an automatic rollback at that location only</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pipeline-footer">
+                The entire process — all five steps — runs automatically. No one is manually logging into individual locations. No one is guessing whether it worked.
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Key concepts -->
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Key Concepts</div>
+            <div class="section-title">Terms you'll hear — explained plainly</div>
+        </div>
+        <div class="compliance-wrap">
+            <table class="compliance-table">
+                <thead>
+                    <tr>
+                        <th>Term</th>
+                        <th>What it actually means</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Kubernetes</td>
+                        <td>The underlying technology ECHELON is built on. It's an open-source system that manages software automatically — starting it, stopping it, restarting it if it crashes, and scaling it up or down based on demand. Think of it as the operating system for running software at scale.</td>
+                    </tr>
+                    <tr>
+                        <td>GitOps</td>
+                        <td>A method of managing software where every single change is recorded in a version-controlled log — the same way Google Docs saves every edit with a timestamp and author. This means you can always see what changed, when, who approved it, and what the system looked like at any point in time.</td>
+                    </tr>
+                    <tr>
+                        <td>Zero downtime</td>
+                        <td>When software is updated, there's no moment where the system goes offline. The old version keeps running while the new version starts up alongside it. Once the new version is confirmed healthy, traffic switches over. Users never notice anything happened.</td>
+                    </tr>
+                    <tr>
+                        <td>Rollback</td>
+                        <td>If an update causes a problem — anything at all — the system automatically switches back to the version that was working before. This happens in seconds, without a human having to intervene. It's a safety net built into the architecture.</td>
+                    </tr>
+                    <tr>
+                        <td>Service mesh</td>
+                        <td>A secure communication layer that connects all parts of the system to each other. Every message sent between components is encrypted, and both sides have to prove who they are before any data is exchanged. No part of the system can talk to another without authorization.</td>
+                    </tr>
+                    <tr>
+                        <td>Zero trust</td>
+                        <td>A security model where nothing is trusted by default — not even systems inside the network. Every request has to prove its identity and get permission, every time. This means that even if someone gets inside the network, they still can't access anything they're not explicitly allowed to.</td>
+                    </tr>
+                    <tr>
+                        <td>Compliance</td>
+                        <td>Rules set by governments and industry bodies that organizations have to follow — like PCI-DSS for companies that handle credit cards, or CMMC for defense contractors. ECHELON enforces these rules automatically and generates proof that it's doing so, so auditors can verify it without anyone having to manually compile documentation.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Why it matters -->
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">The Bottom Line</div>
+            <div class="section-title">Why any of this matters</div>
+        </div>
+        <div class="grid-3">
+            <div class="card">
+                <h3>Speed</h3>
+                <p style="line-height:1.85;">A security patch that used to take days to roll out manually can reach every location in under 30 minutes. In a world where vulnerabilities are exploited within hours of being discovered, that speed is the difference between being protected and being compromised.</p>
+            </div>
+            <div class="card">
+                <h3>Reliability</h3>
+                <p style="line-height:1.85;">Because every location can operate independently and roll back automatically, a problem at one site doesn't cascade to others. The system is designed to fail gracefully — a bad update affects one location for seconds, not 5,000 locations for hours.</p>
+            </div>
+            <div class="card">
+                <h3>Trust</h3>
+                <p style="line-height:1.85;">Every action the system takes is logged. Every update is signed. Every configuration is version-controlled. This means that when a regulator, an auditor, or a customer asks "what happened and when?" — the answer is already there, complete and unmodifiable.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="page-footer">
+    <span>Echelon · Plain Language Overview · Confidential</span>
+    <span class="footer-status">All systems operational</span>
+</div>
+
+</body>
+</html>

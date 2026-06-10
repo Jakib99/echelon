@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECHELON — Platform Overview</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<script src="auth.js"></script>
+<script>checkAuth();</script>
+
+<nav>
+    <div class="nav-inner">
+        <a href="diagram.html" class="nav-logo">
+            <span class="nav-logo-dot"></span>
+            Echelon
+        </a>
+        <div class="nav-links">
+            <a href="index.html" class="active">Platform</a>
+            <a href="banking.html">Banking</a>
+            <a href="govcon.html">GovCon</a>
+            <a href="simple.html">How It Works</a>
+            <div class="nav-divider"></div>
+            <button class="nav-logout" onclick="logout()">Sign out</button>
+        </div>
+    </div>
+</nav>
+
+<div class="page-header">
+    <div class="eyebrow">Platform Overview</div>
+    <h1>One control plane.<br>Every node. Zero downtime.</h1>
+    <p>ECHELON is a GitOps-native deployment platform built on Kubernetes. A single pane of glass to build, harden, and deliver software to a distributed fleet — with policy enforcement, full auditability, and instant rollback at every layer.</p>
+</div>
+
+<div class="container">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Architecture</div>
+            <div class="section-title">Three layers. One system.</div>
+            <div class="section-body">The platform is organized into a central control plane that orchestrates everything, a zero-trust service mesh that connects it to the fleet, and local Kubernetes clusters running at every edge node.</div>
+        </div>
+        <div class="grid-3">
+            <div class="card accent-top">
+                <div class="card-label">Layer 01</div>
+                <h3>Central Control Plane</h3>
+                <p>Runs the full ECHELON stack — policy engine, security hardening, GitOps pipeline, and fleet dashboard. The single source of truth for every deployment across the organization.</p>
+            </div>
+            <div class="card accent-top">
+                <div class="card-label">Layer 02</div>
+                <h3>Service Mesh</h3>
+                <p>A zero-trust network fabric connecting the control plane to every node. All traffic mutually authenticated and encrypted. Certificates, routing, and rollbacks managed automatically.</p>
+            </div>
+            <div class="card accent-top">
+                <div class="card-label">Layer 03</div>
+                <h3>Edge Nodes</h3>
+                <p>Local Kubernetes clusters at every site. Fully autonomous during network interruptions. Policy enforcement and health reporting run locally without requiring a live HQ connection.</p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Control Plane</div>
+            <div class="section-title">Centralized orchestration and governance</div>
+            <div class="section-body">The control plane manages the full deployment lifecycle, enforces policy fleet-wide, and provides complete observability into every node in real time.</div>
+        </div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>Kubernetes Master Cluster</h3>
+                <ul>
+                    <li>Orchestrates workloads across all edge nodes in the fleet</li>
+                    <li>Auto-scales compute resources based on deployment demand</li>
+                    <li>Continuous health monitoring with automatic node remediation</li>
+                    <li>Role-based access control enforced at the cluster level</li>
+                    <li>Encrypted state persistence via hardened etcd cluster</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>ECHELON Control</h3>
+                <ul>
+                    <li>Policy engine — compliance rules enforced globally, not per-node</li>
+                    <li>CVE scanning and patch automation on every build artifact</li>
+                    <li>Live fleet dashboard — real-time status of every node</li>
+                    <li>GitOps audit trail — immutable log of every change ever made</li>
+                    <li>One-click rollback — per-node or fleet-wide in seconds</li>
+                    <li>Alerting and incident response hooks built in</li>
+                </ul>
+            </div>
+        </div>
+        <div class="chip-row">
+            <span class="chip accent">Helm</span>
+            <span class="chip accent">ArgoCD</span>
+            <span class="chip accent">Prometheus</span>
+            <span class="chip accent">Grafana</span>
+            <span class="chip accent">Vault</span>
+            <span class="chip accent">OPA / Gatekeeper</span>
+            <span class="chip accent">Falco</span>
+            <span class="chip">Kubernetes 1.28+</span>
+            <span class="chip">containerd</span>
+            <span class="chip">Istio</span>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Deployment Pipeline</div>
+            <div class="section-title">Commit to fleet — automated and auditable</div>
+            <div class="section-body">Every deployment runs through the same five-stage pipeline. No manual steps. No SSH access. No config drift. Every artifact is tested, signed, and policy-checked before it reaches a single node.</div>
+        </div>
+        <div class="pipeline-wrap">
+            <div class="pipeline-track">
+                <div class="pipeline-step">
+                    <div class="step-num">[01]</div>
+                    <div class="step-name">Build</div>
+                    <ul class="step-items">
+                        <li>Unit and integration tests</li>
+                        <li>Container image built</li>
+                        <li>Dependency audit</li>
+                        <li>SBOM generated</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[02]</div>
+                    <div class="step-name">Harden</div>
+                    <ul class="step-items">
+                        <li>CVE and vulnerability scan</li>
+                        <li>Image signed via cosign</li>
+                        <li>Policy enforcement (OPA)</li>
+                        <li>Secrets injected (Vault)</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[03]</div>
+                    <div class="step-name">Stage</div>
+                    <ul class="step-items">
+                        <li>Canary deploy to subset</li>
+                        <li>Smoke and regression tests</li>
+                        <li>Performance benchmarks</li>
+                        <li>Auto-promote or abort</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[04]</div>
+                    <div class="step-name">Transfer</div>
+                    <ul class="step-items">
+                        <li>Package pushed to registry</li>
+                        <li>Manifests synced via GitOps</li>
+                        <li>Batched by region or group</li>
+                        <li>Delta-only transfers</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[05]</div>
+                    <div class="step-name">Release</div>
+                    <ul class="step-items">
+                        <li>Rolling deploy fleet-wide</li>
+                        <li>Zero-downtime switchover</li>
+                        <li>Health gates each wave</li>
+                        <li>Instant rollback on failure</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pipeline-footer">
+                Fully automated · No manual SSH · No config drift · Every step auditable and reproducible
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Service Mesh</div>
+            <div class="section-title">Secure, observable connectivity across the fleet</div>
+            <div class="section-body">Handles encryption, identity, traffic routing, and rollback mechanics — without requiring changes to application code.</div>
+        </div>
+        <div class="mesh-grid">
+            <div class="mesh-item">
+                <div class="mesh-item-title">Mutual TLS</div>
+                <div class="mesh-item-desc">Every connection encrypted end-to-end. Both sides cryptographically authenticated. No plaintext traffic anywhere in the fleet.</div>
+            </div>
+            <div class="mesh-item">
+                <div class="mesh-item-title">Traffic Control</div>
+                <div class="mesh-item-desc">Canary splits, automatic retries, circuit breakers, and weighted load balancing — all without touching application code.</div>
+            </div>
+            <div class="mesh-item">
+                <div class="mesh-item-title">Observability</div>
+                <div class="mesh-item-desc">Distributed tracing, request-level metrics, and structured logs across every node — fed into a central dashboard automatically.</div>
+            </div>
+            <div class="mesh-item">
+                <div class="mesh-item-title">Instant Rollback</div>
+                <div class="mesh-item-desc">Health check failure triggers automatic traffic re-weighting to the previous version within seconds. No manual intervention.</div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Edge Nodes</div>
+            <div class="section-title">Distributed fleet — centrally managed, locally resilient</div>
+            <div class="section-body">Every site runs a local Kubernetes cluster. Nodes operate autonomously during network outages and sync automatically when connectivity is restored.</div>
+        </div>
+        <div class="node-block">
+            <div class="node-block-header">
+                <span>Fleet nodes</span>
+                <span class="count">Scales to any fleet size</span>
+            </div>
+            <div class="node-row">
+                <div class="node-item">
+                    <div class="node-status"></div>
+                    <div class="node-name">Site Alpha</div>
+                    <div class="node-sub">Primary operations hub</div>
+                    <div class="node-badge">Local Kubernetes</div>
+                    <ul>
+                        <li>Core application services</li>
+                        <li>Real-time data processing</li>
+                        <li>Offline failover mode</li>
+                        <li>Encrypted local storage</li>
+                    </ul>
+                </div>
+                <div class="node-item">
+                    <div class="node-status"></div>
+                    <div class="node-name">Site Bravo</div>
+                    <div class="node-sub">Regional distribution node</div>
+                    <div class="node-badge">Local Kubernetes</div>
+                    <ul>
+                        <li>Core application services</li>
+                        <li>Real-time data processing</li>
+                        <li>Offline failover mode</li>
+                        <li>Encrypted local storage</li>
+                    </ul>
+                </div>
+                <div class="node-item">
+                    <div class="node-status"></div>
+                    <div class="node-name">Site Charlie</div>
+                    <div class="node-sub">Low-connectivity remote site</div>
+                    <div class="node-badge">Local Kubernetes</div>
+                    <ul>
+                        <li>Core application services</li>
+                        <li>Real-time data processing</li>
+                        <li>Offline failover mode</li>
+                        <li>Encrypted local storage</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="node-more">Each node runs an identical, centrally managed Kubernetes stack — same policies, same artifacts, same audit trail</div>
+        </div>
+
+        <div class="grid-3" style="margin-top: 12px;">
+            <div class="card">
+                <h3>At the Control Plane</h3>
+                <ul>
+                    <li>Runs the full ECHELON control stack</li>
+                    <li>Tests, hardens, and signs all artifacts</li>
+                    <li>Manages secrets and certificate lifecycle</li>
+                    <li>Monitors node health fleet-wide</li>
+                    <li>Orchestrates phased rollouts by region</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>At Each Edge Node</h3>
+                <ul>
+                    <li>Runs all local application services</li>
+                    <li>Pulls and applies updates automatically</li>
+                    <li>Enforces policies from the control plane</li>
+                    <li>Reports health metrics upstream</li>
+                    <li>Auto-rollback on failed health checks</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>In the Service Mesh</h3>
+                <ul>
+                    <li>Connects control plane to every node</li>
+                    <li>Routes all traffic over mTLS</li>
+                    <li>Manages certificate lifecycle automatically</li>
+                    <li>Enables canary splits per deployment</li>
+                    <li>Instant rollback via traffic re-weighting</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="page-footer">
+    <span>Echelon · Platform Overview · Confidential</span>
+    <span class="footer-status">All systems operational</span>
+</div>
+
+</body>
+</html>

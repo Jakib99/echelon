@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECHELON</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ════════════════════════════════════════════════════
+           COVER PAGE — full-bleed immersive landing
+        ════════════════════════════════════════════════════ */
+        body.cover {
+            overflow-x: hidden;
+        }
+        .cover-top {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 32px;
+            background: linear-gradient(180deg, rgba(4,8,15,0.92), rgba(4,8,15,0));
+            backdrop-filter: blur(2px);
+        }
+        .cover-top .nav-logo { font-size: 13px; }
+        .cover-top-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .cover-clock {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+        .cover-clock .live-dot {
+            display: inline-block;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            margin-right: 6px;
+            animation: pulse-dot 2s infinite;
+            vertical-align: middle;
+        }
+
+        /* ── HERO ─────────────────────────────────────────── */
+        .hero {
+            position: relative;
+            min-height: 92vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 60px;
+            overflow: hidden;
+        }
+        /* animated radar/scan rings behind title */
+        .hero-rings {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px; height: 900px;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        .hero-ring {
+            position: absolute;
+            top: 50%; left: 50%;
+            border: 1px solid rgba(14,165,233,0.10);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .hero-ring.r1 { width: 280px; height: 280px; }
+        .hero-ring.r2 { width: 480px; height: 480px; border-color: rgba(14,165,233,0.07); }
+        .hero-ring.r3 { width: 700px; height: 700px; border-color: rgba(14,165,233,0.05); }
+        .hero-ring.r4 { width: 900px; height: 900px; border-color: rgba(14,165,233,0.035); }
+        .hero-pulse {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 80px; height: 80px;
+            border: 1px solid var(--accent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: radar-expand 4s ease-out infinite;
+            opacity: 0;
+        }
+        .hero-pulse:nth-child(6) { animation-delay: 2s; }
+        @keyframes radar-expand {
+            0%   { width: 80px; height: 80px; opacity: 0.6; }
+            100% { width: 900px; height: 900px; opacity: 0; }
+        }
+
+        .hero-eyebrow {
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: var(--accent);
+            opacity: 0.8;
+            margin-bottom: 28px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .hero-eyebrow::before, .hero-eyebrow::after {
+            content: '';
+            width: 40px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-border));
+        }
+        .hero-eyebrow::after { background: linear-gradient(90deg, var(--accent-border), transparent); }
+
+        .hero-title {
+            font-size: clamp(58px, 13vw, 150px);
+            font-weight: 800;
+            letter-spacing: clamp(4px, 1.5vw, 18px);
+            line-height: 0.95;
+            margin: 0;
+            color: var(--text-heading);
+            position: relative;
+            background: linear-gradient(180deg, #eaf6ff 0%, #8fbfe0 55%, #3d6f96 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 60px rgba(14,165,233,0.15);
+        }
+        .hero-sub {
+            margin-top: 28px;
+            font-size: clamp(14px, 2vw, 19px);
+            color: var(--text-bright);
+            max-width: 640px;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+        .hero-meta {
+            margin-top: 34px;
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .hero-meta-item {
+            text-align: center;
+        }
+        .hero-meta-val {
+            font-family: var(--mono);
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-heading);
+            letter-spacing: 1px;
+        }
+        .hero-meta-label {
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+        .hero-scroll {
+            position: absolute;
+            bottom: 26px; left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            animation: float-down 2.4s ease-in-out infinite;
+        }
+        .hero-scroll .chev { font-size: 14px; color: var(--accent); }
+        @keyframes float-down {
+            0%,100% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
+            50%     { transform: translateX(-50%) translateY(6px); opacity: 1; }
+        }
+
+        /* ── DIAGRAM SECTION ──────────────────────────────── */
+        .diagram-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 40px 32px 80px;
+        }
+        .section-banner {
+            text-align: center;
+            margin-bottom: 38px;
+        }
+        .section-banner .sb-eyebrow {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            opacity: 0.7;
+            margin-bottom: 14px;
+        }
+        .section-banner h2 {
+            font-size: clamp(28px, 4vw, 44px);
+            font-weight: 700;
+            color: var(--text-heading);
+            margin: 0 0 14px;
+            letter-spacing: -0.5px;
+        }
+        .section-banner p {
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .diagram-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+        .btn-simulate {
+            font-family: var(--mono);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 12px 26px;
+            background: rgba(14,165,233,0.12);
+            border: 1px solid var(--accent-border);
+            border-radius: 5px;
+            color: var(--accent);
+            cursor: pointer;
+            transition: background 0.15s, box-shadow 0.15s;
+        }
+        .btn-simulate:hover { background: rgba(14,165,233,0.2); box-shadow: 0 0 24px rgba(14,165,233,0.15); }
+        .btn-simulate:disabled { opacity: 0.4; cursor: not-allowed; }
+        .btn-reset {
+            font-family: var(--mono);
+            font-size: 10.5px;
+            letter-spacing: 1.5px;
+            padding: 12px 18px;
+            background: transparent;
+            border: 1px solid var(--border-2);
+            border-radius: 5px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.15s, border-color 0.15s;
+        }
+        .btn-reset:hover { color: var(--text-bright); border-color: var(--accent-border); }
+        .sim-status {
+            font-family: var(--mono);
+            font-size: 10.5px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+        .sim-status.running { color: var(--accent); }
+        .sim-status.done { color: var(--green); }
+
+        .diagram-frame {
+            border: 1px solid var(--border-2);
+            border-radius: 14px;
+            background:
+                radial-gradient(ellipse at 50% -10%, rgba(14,165,233,0.05), transparent 60%),
+                var(--surface);
+            padding: 34px;
+            position: relative;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+        }
+        .diagram-frame::before, .diagram-frame::after {
+            content: '';
+            position: absolute;
+            width: 16px; height: 16px;
+            border-color: var(--accent-border);
+        }
+        .diagram-frame::before { top: -1px; left: -1px; border-top: 2px solid; border-left: 2px solid; border-top-left-radius: 14px; }
+        .diagram-frame::after  { bottom: -1px; right: -1px; border-bottom: 2px solid; border-right: 2px solid; border-bottom-right-radius: 14px; }
+
+        .diagram-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 28px;
+            align-items: start;
+        }
+        .diagram-canvas { min-width: 0; }
+
+        /* ── Layers ──────────────────────────────────────── */
+        .diag-layer {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px 22px;
+            background: var(--surface);
+            position: relative;
+        }
+        .diag-layer.hq-layer  { border-top: 2px solid var(--accent); }
+
+        .layer-label {
+            font-family: var(--mono);
+            font-size: 9px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 14px;
+            opacity: 0.6;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .layer-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border-2), transparent);
+        }
+
+        .hq-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        .diag-card {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: border-color 0.18s, box-shadow 0.18s, transform 0.15s;
+            background: var(--surface-3);
+            position: relative;
+            overflow: hidden;
+        }
+        .diag-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(14,165,233,0.06), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .diag-card:hover { border-color: var(--accent-border); transform: translateY(-1px); }
+        .diag-card:hover::before { opacity: 1; }
+        .diag-card.selected { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(14,165,233,0.15), 0 0 20px rgba(14,165,233,0.06); }
+        .diag-card.selected::before { opacity: 1; }
+        .diag-card.lit { border-color: var(--green) !important; box-shadow: 0 0 16px rgba(16,208,112,0.12) !important; }
+
+        .diag-card-label {
+            font-family: var(--mono);
+            font-size: 8.5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            opacity: 0.55;
+            margin-bottom: 6px;
+        }
+        .diag-card-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-bright);
+            margin-bottom: 6px;
+        }
+        .diag-card-items { list-style: none; padding: 0; margin: 0; }
+        .diag-card-items li {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            padding: 2px 0;
+            display: flex;
+            gap: 6px;
+        }
+        .diag-card-items li::before {
+            content: '/';
+            font-family: var(--mono);
+            color: var(--text-muted);
+            font-size: 9px;
+            opacity: 0.5;
+        }
+
+        /* ── Connector (vertical) ────────────────────────── */
+        .connector-v {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 44px;
+            position: relative;
+            overflow: hidden;
+        }
+        .connector-v::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0; bottom: 0;
+            width: 1px;
+            background: linear-gradient(180deg, var(--accent) 0%, rgba(14,165,233,0.2) 100%);
+            transform: translateX(-50%);
+        }
+        .connector-v .flow-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px; height: 5px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(14,165,233,0.7);
+            animation: flow-down 1.8s linear infinite;
+        }
+        .connector-v .flow-dot:nth-child(2) { animation-delay: 0.6s; }
+        .connector-v .flow-dot:nth-child(3) { animation-delay: 1.2s; }
+        @keyframes flow-down {
+            0%   { top: -6px; opacity: 0; }
+            10%  { opacity: 1; }
+            90%  { opacity: 1; }
+            100% { top: calc(100% + 6px); opacity: 0; }
+        }
+
+        /* ── Pipeline track ──────────────────────────────── */
+        .pipeline-diag {
+            display: flex;
+            align-items: stretch;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--surface);
+        }
+        .pipe-step {
+            flex: 1;
+            padding: 16px 14px;
+            border-right: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+            position: relative;
+        }
+        .pipe-step:last-child { border-right: none; }
+        .pipe-step::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), rgba(14,165,233,0.2));
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .pipe-step:hover { background: var(--surface-2); }
+        .pipe-step:hover::before { opacity: 1; }
+        .pipe-step.selected { background: var(--surface-3); }
+        .pipe-step.selected::before { opacity: 1; }
+        .pipe-step.lit { background: rgba(16,208,112,0.05) !important; }
+        .pipe-step.lit::before { background: var(--green); opacity: 1; }
+
+        .pipe-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            flex-shrink: 0;
+            background: var(--surface);
+            position: relative;
+            overflow: hidden;
+        }
+        .pipe-arrow::after { content: '›'; font-size: 16px; color: var(--text-muted); opacity: 0.5; }
+        .pipe-num {
+            font-family: var(--mono);
+            font-size: 8.5px;
+            color: var(--text-muted);
+            opacity: 0.6;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        .pipe-name {
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-bright);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+        .pipe-items { list-style: none; padding: 0; margin: 0; }
+        .pipe-items li {
+            font-size: 10px;
+            color: var(--text-muted);
+            padding: 1.5px 0;
+            line-height: 1.4;
+        }
+        .pipe-items li::before { content: '— '; color: var(--text-muted); opacity: 0.5; font-family: var(--mono); font-size: 9px; }
+
+        /* ── Mesh bar ────────────────────────────────────── */
+        .mesh-bar {
+            border: 1px solid var(--border-2);
+            border-radius: 6px;
+            padding: 14px 18px;
+            background: var(--surface-2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: border-color 0.18s;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .mesh-bar:hover { border-color: var(--accent-border); }
+        .mesh-bar.selected { border-color: var(--accent); box-shadow: 0 0 20px rgba(14,165,233,0.06); }
+        .mesh-bar.lit { border-color: var(--green) !important; box-shadow: 0 0 16px rgba(16,208,112,0.1) !important; }
+        .mesh-left { display: flex; align-items: center; gap: 10px; }
+        .mesh-dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 8px rgba(14,165,233,0.5); animation: pulse-dot 2s infinite; }
+        .mesh-title { font-size: 12px; font-weight: 600; color: var(--text-bright); }
+        .mesh-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+        .mesh-tag { font-family: var(--mono); font-size: 9px; padding: 2px 7px; border: 1px solid var(--border-2); border-radius: 2px; color: var(--text-muted); }
+
+        /* ── Fan connector ───────────────────────────────── */
+        .fan-connector { position: relative; height: 40px; margin: 0 10px; }
+        .fan-connector svg { width: 100%; height: 100%; overflow: visible; }
+
+        /* ── Node grid ───────────────────────────────────── */
+        .nodes-diag { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .diag-node {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 13px 14px;
+            cursor: pointer;
+            transition: border-color 0.18s, box-shadow 0.18s, transform 0.15s;
+            background: var(--surface);
+            position: relative;
+        }
+        .diag-node:hover { border-color: var(--border-2); transform: translateY(-1px); }
+        .diag-node.selected { border-color: var(--accent); box-shadow: 0 0 16px rgba(14,165,233,0.07); }
+        .diag-node.lit { border-color: var(--green) !important; box-shadow: 0 0 16px rgba(16,208,112,0.1) !important; }
+        .diag-node.more-node {
+            background: var(--surface-2);
+            border-style: dashed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: default;
+            text-align: center;
+        }
+        .diag-node.more-node:hover { transform: none; }
+        .node-status-dot {
+            position: absolute;
+            top: 12px; right: 12px;
+            width: 6px; height: 6px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse-dot 2.4s infinite;
+        }
+        .node-id { font-family: var(--mono); font-size: 8.5px; color: var(--text-muted); opacity: 0.7; margin-bottom: 4px; letter-spacing: 1px; }
+        .node-name { font-size: 11px; font-weight: 600; color: var(--text-bright); margin-bottom: 2px; }
+        .node-loc { font-family: var(--mono); font-size: 9px; color: var(--text-muted); margin-bottom: 8px; }
+        .node-badge-diag {
+            font-family: var(--mono);
+            font-size: 8px;
+            padding: 1px 6px;
+            border: 1px solid var(--border-2);
+            border-radius: 2px;
+            color: var(--text-muted);
+            display: inline-block;
+        }
+        .more-count { font-family: var(--mono); font-size: 14px; font-weight: 700; color: var(--text-bright); display: block; }
+        .more-label { font-family: var(--mono); font-size: 9px; color: var(--text-muted); margin-top: 3px; letter-spacing: 1px; }
+
+        /* ── Info Panel ──────────────────────────────────── */
+        .info-panel {
+            position: sticky;
+            top: 90px;
+            background: var(--surface-2);
+            border: 1px solid var(--border-2);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .info-panel.active { border-color: var(--accent-border); }
+        .info-panel-header {
+            padding: 16px 18px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface-3);
+        }
+        .info-panel-eyebrow {
+            font-family: var(--mono);
+            font-size: 8.5px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+        .info-panel-title { font-size: 15px; font-weight: 600; color: var(--text-heading); }
+        .info-panel-body { padding: 18px; }
+        .info-panel-desc {
+            font-size: 12px;
+            color: var(--text-bright);
+            line-height: 1.75;
+            margin-bottom: 16px;
+        }
+        .info-detail-list { list-style: none; padding: 0; margin: 0; }
+        .info-detail-list li {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            padding: 6px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 8px;
+            line-height: 1.5;
+        }
+        .info-detail-list li:last-child { border-bottom: none; }
+        .info-detail-list li::before {
+            content: '/';
+            font-family: var(--mono);
+            color: var(--accent);
+            opacity: 0.5;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+        .info-default { padding: 50px 24px; text-align: center; }
+        .info-default-icon { font-family: var(--mono); font-size: 24px; color: var(--accent); opacity: 0.4; margin-bottom: 12px; }
+        .info-default p { font-size: 11.5px; color: var(--text-muted); line-height: 1.7; }
+
+        /* ── PORTAL (enter the site) ─────────────────────── */
+        .portal-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 30px 32px 100px;
+        }
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .portal-card {
+            display: block;
+            text-decoration: none;
+            border: 1px solid var(--border-2);
+            border-radius: 10px;
+            padding: 26px 22px;
+            background: var(--surface);
+            transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s, background 0.18s;
+            position: relative;
+            overflow: hidden;
+        }
+        .portal-card::after {
+            content: '→';
+            position: absolute;
+            top: 22px; right: 22px;
+            font-size: 16px;
+            color: var(--text-muted);
+            opacity: 0.4;
+            transition: transform 0.2s, color 0.2s, opacity 0.2s;
+        }
+        .portal-card:hover {
+            border-color: var(--accent-border);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+            background: var(--surface-2);
+        }
+        .portal-card:hover::after { transform: translateX(4px); color: var(--accent); opacity: 1; }
+        .portal-num {
+            font-family: var(--mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: var(--accent);
+            opacity: 0.7;
+            margin-bottom: 18px;
+        }
+        .portal-name { font-size: 17px; font-weight: 700; color: var(--text-heading); margin-bottom: 8px; }
+        .portal-desc { font-size: 11.5px; color: var(--text-muted); line-height: 1.6; }
+        .portal-card.govcon-card:hover { border-color: rgba(192,48,48,0.4); }
+        .portal-card.govcon-card:hover::after { color: #c85050; }
+        .portal-card.govcon-card .portal-num { color: #c85050; }
+
+        @media (max-width: 1000px) {
+            .portal-grid { grid-template-columns: repeat(2, 1fr); }
+            .diagram-wrapper { grid-template-columns: 1fr; }
+            .info-panel { position: static; }
+        }
+        @media (max-width: 640px) {
+            .nodes-diag { grid-template-columns: repeat(2, 1fr); }
+            .hq-inner { grid-template-columns: 1fr; }
+            .pipeline-diag { flex-direction: column; }
+            .pipe-arrow { width: 100%; height: 22px; transform: rotate(90deg); }
+            .portal-grid { grid-template-columns: 1fr; }
+            .diagram-frame { padding: 18px; }
+            .cover-top { padding: 14px 18px; }
+        }
+    </style>
+</head>
+<body class="cover">
+<script src="auth.js"></script>
+<script>checkAuth();</script>
+
+<!-- ── Top bar ── -->
+<div class="cover-top">
+    <a href="diagram.html" class="nav-logo">
+        <span class="nav-logo-dot"></span>
+        Echelon
+    </a>
+    <div class="cover-top-right">
+        <span class="cover-clock"><span class="live-dot"></span><span id="clock">--:--:-- UTC</span></span>
+        <button class="nav-logout" onclick="logout()">Sign out</button>
+    </div>
+</div>
+
+<!-- ── HERO ── -->
+<div class="hero">
+    <div class="hero-rings">
+        <div class="hero-ring r1"></div>
+        <div class="hero-ring r2"></div>
+        <div class="hero-ring r3"></div>
+        <div class="hero-ring r4"></div>
+        <div class="hero-pulse"></div>
+        <div class="hero-pulse"></div>
+    </div>
+
+    <div class="hero-eyebrow">Distributed Deployment Platform</div>
+    <h1 class="hero-title">ECHELON</h1>
+    <p class="hero-sub">One control plane. Every node. Zero downtime. A GitOps-native platform that builds, hardens, and delivers software to thousands of locations — securely, and all at once.</p>
+
+    <div class="hero-meta">
+        <div class="hero-meta-item">
+            <div class="hero-meta-val">5,000+</div>
+            <div class="hero-meta-label">Managed Nodes</div>
+        </div>
+        <div class="hero-meta-item">
+            <div class="hero-meta-val">&lt;30<span style="font-size:13px;">min</span></div>
+            <div class="hero-meta-label">Fleet Rollout</div>
+        </div>
+        <div class="hero-meta-item">
+            <div class="hero-meta-val">0</div>
+            <div class="hero-meta-label">Downtime</div>
+        </div>
+        <div class="hero-meta-item">
+            <div class="hero-meta-val">100%</div>
+            <div class="hero-meta-label">Audited</div>
+        </div>
+    </div>
+
+    <div class="hero-scroll">
+        <span>Explore the Architecture</span>
+        <span class="chev">▾</span>
+    </div>
+</div>
+
+<!-- ── INTERACTIVE DIAGRAM ── -->
+<div class="diagram-section" id="diagram">
+    <div class="section-banner">
+        <div class="sb-eyebrow">Interactive System Map</div>
+        <h2>The architecture, end to end</h2>
+        <p>Click any component to inspect it. Or run a simulated deployment to watch the system move software from HQ to every node in real time.</p>
+    </div>
+
+    <div class="diagram-controls">
+        <button class="btn-simulate" id="btnSimulate" onclick="runSimulation()">&#9654;&nbsp;&nbsp;Simulate Deployment</button>
+        <button class="btn-reset" onclick="resetAll()">Reset</button>
+        <span class="sim-status" id="simStatus"></span>
+    </div>
+
+    <div class="diagram-frame">
+        <div class="diagram-wrapper">
+
+            <!-- DIAGRAM CANVAS -->
+            <div class="diagram-canvas">
+
+                <!-- HQ Layer -->
+                <div class="diag-layer hq-layer">
+                    <div class="layer-label">HQ Control Plane — Azure Data Center</div>
+                    <div class="hq-inner">
+                        <div class="diag-card" id="c-k8s" onclick="select('k8s')">
+                            <div class="diag-card-label">Core Infrastructure</div>
+                            <div class="diag-card-title">Kubernetes Master Cluster</div>
+                            <ul class="diag-card-items">
+                                <li>Orchestrates all edge node workloads</li>
+                                <li>Auto-scales on deployment demand</li>
+                                <li>Continuous health monitoring</li>
+                                <li>Encrypted etcd state store</li>
+                            </ul>
+                        </div>
+                        <div class="diag-card" id="c-echelon" onclick="select('echelon')">
+                            <div class="diag-card-label">Control Software</div>
+                            <div class="diag-card-title">ECHELON Control</div>
+                            <ul class="diag-card-items">
+                                <li>Policy engine — global enforcement</li>
+                                <li>Fleet dashboard — real-time status</li>
+                                <li>GitOps audit trail — immutable log</li>
+                                <li>One-click rollback — any scope</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="connector-v">
+                    <div class="flow-dot"></div><div class="flow-dot"></div><div class="flow-dot"></div>
+                </div>
+
+                <!-- Pipeline Layer -->
+                <div class="diag-layer" style="padding:0; overflow:hidden;">
+                    <div style="padding: 12px 16px 10px; border-bottom: 1px solid var(--border); background: var(--surface-2);">
+                        <div class="layer-label" style="margin:0;">Deployment Pipeline</div>
+                    </div>
+                    <div class="pipeline-diag" style="border:none; border-radius:0;">
+                        <div class="pipe-step" id="p-01" onclick="select('pipe-01')">
+                            <div class="pipe-num">[01]</div>
+                            <div class="pipe-name">Build</div>
+                            <ul class="pipe-items"><li>Tests run</li><li>Image built</li><li>SBOM generated</li></ul>
+                        </div>
+                        <div class="pipe-arrow"></div>
+                        <div class="pipe-step" id="p-02" onclick="select('pipe-02')">
+                            <div class="pipe-num">[02]</div>
+                            <div class="pipe-name">Harden</div>
+                            <ul class="pipe-items"><li>CVE scan</li><li>Image signed</li><li>Policy check</li></ul>
+                        </div>
+                        <div class="pipe-arrow"></div>
+                        <div class="pipe-step" id="p-03" onclick="select('pipe-03')">
+                            <div class="pipe-num">[03]</div>
+                            <div class="pipe-name">Stage</div>
+                            <ul class="pipe-items"><li>Canary deploy</li><li>Smoke tests</li><li>Auto-gate</li></ul>
+                        </div>
+                        <div class="pipe-arrow"></div>
+                        <div class="pipe-step" id="p-04" onclick="select('pipe-04')">
+                            <div class="pipe-num">[04]</div>
+                            <div class="pipe-name">Transfer</div>
+                            <ul class="pipe-items"><li>Registry push</li><li>GitOps sync</li><li>Delta transfer</li></ul>
+                        </div>
+                        <div class="pipe-arrow"></div>
+                        <div class="pipe-step" id="p-05" onclick="select('pipe-05')">
+                            <div class="pipe-num">[05]</div>
+                            <div class="pipe-name">Release</div>
+                            <ul class="pipe-items"><li>Rolling deploy</li><li>Health gates</li><li>Auto-rollback</li></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="connector-v">
+                    <div class="flow-dot"></div><div class="flow-dot"></div><div class="flow-dot"></div>
+                </div>
+
+                <!-- Service Mesh -->
+                <div class="mesh-bar" id="c-mesh" onclick="select('mesh')">
+                    <div class="mesh-left">
+                        <div class="mesh-dot"></div>
+                        <div class="mesh-title">Service Mesh — Zero Trust Network Fabric</div>
+                    </div>
+                    <div class="mesh-tags">
+                        <span class="mesh-tag">mTLS</span>
+                        <span class="mesh-tag">SPIFFE</span>
+                        <span class="mesh-tag">Istio</span>
+                        <span class="mesh-tag">Deny-by-default</span>
+                    </div>
+                </div>
+
+                <!-- Fan SVG connector -->
+                <div class="fan-connector" id="fanConnector">
+                    <svg id="fanSvg" preserveAspectRatio="none"></svg>
+                </div>
+
+                <!-- Edge Nodes -->
+                <div class="nodes-diag" id="nodesGrid">
+                    <div class="diag-node" id="n-1" onclick="select('node')">
+                        <div class="node-status-dot"></div>
+                        <div class="node-id">NODE-001</div>
+                        <div class="node-name">New York</div>
+                        <div class="node-loc">IL-NY-001</div>
+                        <div class="node-badge-diag">Local K8s · Online</div>
+                    </div>
+                    <div class="diag-node" id="n-2" onclick="select('node')">
+                        <div class="node-status-dot"></div>
+                        <div class="node-id">NODE-002</div>
+                        <div class="node-name">Miami</div>
+                        <div class="node-loc">IL-FL-002</div>
+                        <div class="node-badge-diag">Local K8s · Online</div>
+                    </div>
+                    <div class="diag-node" id="n-3" onclick="select('node')">
+                        <div class="node-status-dot"></div>
+                        <div class="node-id">NODE-003</div>
+                        <div class="node-name">Dallas</div>
+                        <div class="node-loc">IL-TX-003</div>
+                        <div class="node-badge-diag">Local K8s · Online</div>
+                    </div>
+                    <div class="diag-node more-node">
+                        <span class="more-count">+4,997</span>
+                        <span class="more-label">more nodes</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- INFO PANEL -->
+            <div class="info-panel" id="infoPanel">
+                <div class="info-default" id="infoDefault">
+                    <div class="info-default-icon">[ + ]</div>
+                    <p>Select any component in the diagram to inspect what it does.</p>
+                </div>
+                <div id="infoContent" style="display:none;">
+                    <div class="info-panel-header">
+                        <div class="info-panel-eyebrow" id="infoEyebrow"></div>
+                        <div class="info-panel-title" id="infoTitle"></div>
+                    </div>
+                    <div class="info-panel-body">
+                        <div class="info-panel-desc" id="infoDesc"></div>
+                        <ul class="info-detail-list" id="infoList"></ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ── PORTAL ── -->
+<div class="portal-section">
+    <div class="section-banner">
+        <div class="sb-eyebrow">Enter the Platform</div>
+        <h2>Where do you want to go?</h2>
+    </div>
+    <div class="portal-grid">
+        <a href="index.html" class="portal-card">
+            <div class="portal-num">[ 01 ]</div>
+            <div class="portal-name">Platform</div>
+            <div class="portal-desc">The full technical overview — architecture, control plane, pipeline, and service mesh.</div>
+        </a>
+        <a href="banking.html" class="portal-card">
+            <div class="portal-num">[ 02 ]</div>
+            <div class="portal-name">Banking</div>
+            <div class="portal-desc">ECHELON for financial services. 5,000 branches, one platform, PCI-DSS by design.</div>
+        </a>
+        <a href="govcon.html" class="portal-card govcon-card">
+            <div class="portal-num">[ 03 ]</div>
+            <div class="portal-name">GovCon</div>
+            <div class="portal-desc">Air-gap ready, ATO compatible. CMMC, FedRAMP, and IL2–IL6 segmentation.</div>
+        </a>
+        <a href="simple.html" class="portal-card">
+            <div class="portal-num">[ 04 ]</div>
+            <div class="portal-name">How It Works</div>
+            <div class="portal-desc">The whole system explained in plain language. No technical background required.</div>
+        </a>
+    </div>
+</div>
+
+<div class="page-footer">
+    <span>Echelon · Distributed Deployment Platform · Confidential</span>
+    <span class="footer-status">All systems operational</span>
+</div>
+
+<script>
+// ── Component data ──────────────────────────────────────────
+const data = {
+    k8s: {
+        eyebrow: 'HQ — Core Infrastructure',
+        title: 'Kubernetes Master Cluster',
+        desc: 'The orchestration engine at the heart of ECHELON. It manages every workload running across the entire fleet — from the control software at HQ to the services running at each edge node.',
+        details: [
+            'Schedules and manages containers across the fleet',
+            'Auto-scales compute when rollouts create load spikes',
+            'Continuously monitors node health and self-heals',
+            'Role-based access control (RBAC) at the cluster level',
+            'Encrypted etcd database stores all cluster state',
+            'High-availability setup — no single point of failure'
+        ]
+    },
+    echelon: {
+        eyebrow: 'HQ — Control Software',
+        title: 'ECHELON Control',
+        desc: 'The operational brain of the platform. This is where policies are defined, deployments are triggered, and the entire fleet is observed. One interface — full control.',
+        details: [
+            'Policy engine enforces compliance rules fleet-wide',
+            'Live fleet dashboard — status of every node in real time',
+            'Immutable GitOps audit log — every change recorded',
+            'One-click rollback — per node or across all 5,000',
+            'CVE scanning and automated patch sequencing',
+            'SIEM integration for continuous security monitoring'
+        ]
+    },
+    mesh: {
+        eyebrow: 'Network Layer',
+        title: 'Zero Trust Service Mesh',
+        desc: 'The secure communication layer connecting HQ to every node. Nothing is trusted by default. Every connection is encrypted, both sides must prove identity, and all access is explicitly authorized.',
+        details: [
+            'Mutual TLS (mTLS) on every inter-service connection',
+            'SPIFFE/SPIRE workload identity — no static credentials',
+            'Deny-by-default policy — no implicit access anywhere',
+            'Canary traffic splits for staged rollouts',
+            'Circuit breakers prevent cascading failures',
+            'Full distributed tracing and request-level observability'
+        ]
+    },
+    'pipe-01': {
+        eyebrow: 'Pipeline — Step 01',
+        title: 'Build',
+        desc: 'The deployment begins. The software is packaged into a container image, all automated tests run, and a complete record of everything inside the package is generated.',
+        details: [
+            'Unit and integration tests must pass before proceeding',
+            'Container image built from a hardened base image',
+            'Full dependency graph audited for known issues',
+            'Software Bill of Materials (SBOM) generated',
+            'Build artifacts versioned and stored immutably',
+            'Any test failure halts the pipeline here'
+        ]
+    },
+    'pipe-02': {
+        eyebrow: 'Pipeline — Step 02',
+        title: 'Harden',
+        desc: 'Every artifact is security-scanned, policy-checked, and digitally signed before it can move forward. Nothing passes this stage with a known vulnerability or a policy violation.',
+        details: [
+            'CVE scan against known vulnerability databases',
+            'STIG compliance check against hardening benchmarks',
+            'Image cryptographically signed with cosign',
+            'OPA policy gates enforce compliance rules',
+            'Secrets injected from Vault — never baked into images',
+            'Non-compliant artifacts are blocked and logged'
+        ]
+    },
+    'pipe-03': {
+        eyebrow: 'Pipeline — Step 03',
+        title: 'Stage',
+        desc: 'Before reaching the full fleet, the update is deployed to a small canary group. The system watches for any issues. If it clears, the pipeline proceeds automatically.',
+        details: [
+            'Update deployed to a small pilot subset first',
+            'Smoke and regression tests run against live canary',
+            'Performance and throughput benchmarks checked',
+            'Error rate and latency monitored for anomalies',
+            'Approval gate can require human sign-off if configured',
+            'Any failure here blocks the fleet-wide release'
+        ]
+    },
+    'pipe-04': {
+        eyebrow: 'Pipeline — Step 04',
+        title: 'Transfer',
+        desc: 'The signed, verified package is distributed to all nodes. Only the parts that changed are sent — not the full image — which minimizes bandwidth and transfer time.',
+        details: [
+            'Artifact pushed to the accredited container registry',
+            'GitOps manifests updated and synced to all nodes',
+            'Delta-only transfers — only changed layers sent',
+            'Nodes batched by region for orderly progression',
+            'Each node verifies the hash of what it received',
+            'Tampered or incomplete packages are rejected'
+        ]
+    },
+    'pipe-05': {
+        eyebrow: 'Pipeline — Step 05',
+        title: 'Release',
+        desc: 'The update goes live. The old version stays running until the new one is confirmed healthy — at each node individually. Any failure triggers an automatic rollback at that node only.',
+        details: [
+            'Rolling deploy — one wave of nodes at a time',
+            'Old version stays live until new version passes health check',
+            'Zero-downtime switchover — users notice nothing',
+            'Each node independently validates its own health',
+            'Failed node auto-rolls back in seconds',
+            'Rollout pauses fleet-wide if error rate exceeds threshold'
+        ]
+    },
+    node: {
+        eyebrow: 'Edge — Local Kubernetes Node',
+        title: 'Branch / Field Node',
+        desc: 'Each location runs a full local Kubernetes cluster. It operates autonomously if connectivity to HQ is lost, and syncs automatically when it comes back. The local node monitors itself and rolls back if something goes wrong.',
+        details: [
+            'Runs all local application services independently',
+            'Pulls and applies updates automatically from HQ',
+            'Enforces all policies received from control plane',
+            'Reports health metrics upstream in real time',
+            'Offline-capable — operates fully disconnected',
+            'Auto-rollback on failed health checks — no human needed'
+        ]
+    }
+};
+
+const elemMap = {
+    'k8s':'c-k8s','echelon':'c-echelon','mesh':'c-mesh',
+    'pipe-01':'p-01','pipe-02':'p-02','pipe-03':'p-03','pipe-04':'p-04','pipe-05':'p-05',
+    'node':'n-1'
+};
+
+function select(id) {
+    document.querySelectorAll('.diag-card, .pipe-step, .mesh-bar, .diag-node').forEach(el => el.classList.remove('selected'));
+    if (elemMap[id]) {
+        const el = document.getElementById(elemMap[id]);
+        if (el) el.classList.add('selected');
+    }
+    const d = data[id];
+    if (!d) return;
+    document.getElementById('infoDefault').style.display = 'none';
+    document.getElementById('infoContent').style.display = 'block';
+    document.getElementById('infoPanel').classList.add('active');
+    document.getElementById('infoEyebrow').textContent = d.eyebrow;
+    document.getElementById('infoTitle').textContent = d.title;
+    document.getElementById('infoDesc').textContent = d.desc;
+    const list = document.getElementById('infoList');
+    list.innerHTML = '';
+    d.details.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        list.appendChild(li);
+    });
+}
+
+// ── Simulation ──────────────────────────────────────────────
+let simRunning = false;
+function setStatus(text, cls) {
+    const el = document.getElementById('simStatus');
+    el.textContent = text;
+    el.className = 'sim-status' + (cls ? ' ' + cls : '');
+}
+
+async function runSimulation() {
+    if (simRunning) return;
+    simRunning = true;
+    resetAll(true);
+    const btn = document.getElementById('btnSimulate');
+    btn.disabled = true;
+    setStatus('Initializing pipeline...', 'running');
+    await wait(500);
+
+    const steps = [
+        { id: 'p-01', sel: 'pipe-01', label: '[01] Building image — running tests...' },
+        { id: 'p-02', sel: 'pipe-02', label: '[02] Hardening — scanning + signing...' },
+        { id: 'p-03', sel: 'pipe-03', label: '[03] Staging — canary deploy...' },
+        { id: 'p-04', sel: 'pipe-04', label: '[04] Transferring to fleet...' },
+        { id: 'p-05', sel: 'pipe-05', label: '[05] Releasing — rolling deploy...' },
+    ];
+    for (const step of steps) {
+        setStatus(step.label, 'running');
+        document.getElementById(step.id).classList.add('lit');
+        select(step.sel);
+        await wait(950);
+    }
+
+    setStatus('Deploying to nodes...', 'running');
+    document.getElementById('c-mesh').classList.add('lit');
+    await wait(500);
+    for (const nid of ['n-1','n-2','n-3']) {
+        document.getElementById(nid).classList.add('lit');
+        await wait(380);
+    }
+    document.getElementById('c-k8s').classList.add('lit');
+    document.getElementById('c-echelon').classList.add('lit');
+    select('node');
+    setStatus('✓ Deployment complete — all nodes healthy', 'done');
+    btn.disabled = false;
+    simRunning = false;
+}
+
+function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+function resetAll(keepPanel) {
+    document.querySelectorAll('.lit').forEach(el => el.classList.remove('lit'));
+    document.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+    setStatus('');
+    if (!keepPanel) {
+        document.getElementById('infoDefault').style.display = 'block';
+        document.getElementById('infoContent').style.display = 'none';
+        document.getElementById('infoPanel').classList.remove('active');
+    }
+    document.getElementById('btnSimulate').disabled = false;
+    simRunning = false;
+}
+
+// ── Draw SVG fan lines (HQ → nodes) ─────────────────────────
+function drawFan() {
+    const svg = document.getElementById('fanSvg');
+    const container = document.getElementById('fanConnector');
+    const grid = document.getElementById('nodesGrid');
+    const cW = container.offsetWidth, cH = container.offsetHeight;
+    svg.setAttribute('viewBox', `0 0 ${cW} ${cH}`);
+    const srcX = cW / 2, srcY = 0;
+    const contRect = container.getBoundingClientRect();
+    svg.innerHTML = '';
+
+    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+    defs.innerHTML = `<filter id="glow"><feGaussianBlur stdDeviation="1.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+    svg.appendChild(defs);
+
+    const nodes = grid.querySelectorAll('.diag-node:not(.more-node)');
+    nodes.forEach(node => {
+        const r = node.getBoundingClientRect();
+        const tx = (r.left + r.width / 2) - contRect.left;
+        const ty = cH;
+        const cy = cH * 0.5;
+        const pid = 'fp-' + Math.random().toString(36).slice(2);
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('id', pid);
+        path.setAttribute('d', `M ${srcX} ${srcY} C ${srcX} ${cy}, ${tx} ${cy}, ${tx} ${ty}`);
+        path.setAttribute('stroke', 'rgba(14,165,233,0.18)');
+        path.setAttribute('stroke-width', '1');
+        path.setAttribute('fill', 'none');
+        path.setAttribute('stroke-dasharray', '3,4');
+        svg.appendChild(path);
+
+        const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        circle.setAttribute('r', '2.5');
+        circle.setAttribute('fill', '#0ea5e9');
+        circle.setAttribute('filter', 'url(#glow)');
+        const anim = document.createElementNS('http://www.w3.org/2000/svg', 'animateMotion');
+        anim.setAttribute('dur', '2.2s');
+        anim.setAttribute('begin', `${Math.random() * 1.5}s`);
+        anim.setAttribute('repeatCount', 'indefinite');
+        const mpath = document.createElementNS('http://www.w3.org/2000/svg', 'mpath');
+        mpath.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#' + pid);
+        anim.appendChild(mpath);
+        circle.appendChild(anim);
+        svg.appendChild(circle);
+    });
+}
+
+// ── Live UTC clock ──────────────────────────────────────────
+function tickClock() {
+    const d = new Date();
+    const p = n => String(n).padStart(2, '0');
+    document.getElementById('clock').textContent =
+        `${p(d.getUTCHours())}:${p(d.getUTCMinutes())}:${p(d.getUTCSeconds())} UTC`;
+}
+
+// ── Smooth scroll for hero cue ──────────────────────────────
+document.querySelector('.hero-scroll').addEventListener('click', () => {
+    document.getElementById('diagram').scrollIntoView({ behavior: 'smooth' });
+});
+
+window.addEventListener('load', () => { setTimeout(drawFan, 120); tickClock(); setInterval(tickClock, 1000); });
+window.addEventListener('resize', drawFan);
+</script>
+</body>
+</html>

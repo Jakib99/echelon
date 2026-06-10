@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECHELON — GovCon</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="govcon">
+<script src="auth.js"></script>
+<script>checkAuth();</script>
+
+<nav>
+    <div class="nav-inner">
+        <a href="diagram.html" class="nav-logo">
+            <span class="nav-logo-dot"></span>
+            Echelon
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Platform</a>
+            <a href="banking.html">Banking</a>
+            <a href="govcon.html" class="active">GovCon</a>
+            <a href="simple.html">How It Works</a>
+            <div class="nav-divider"></div>
+            <button class="nav-logout" onclick="logout()">Sign out</button>
+        </div>
+    </div>
+</nav>
+
+<div class="page-header">
+    <div class="eyebrow">Sector — Government Contracting</div>
+    <h1>ECHELON for GovCon.<br>Air-gap ready. ATO compatible.</h1>
+    <p>Designed for federal agencies, defense contractors, and program offices operating under CMMC, FedRAMP, NIST 800-53, and DISA STIGs — including fully disconnected and classified environments at IL4 through IL6.</p>
+</div>
+
+<div class="container">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Capabilities</div>
+            <div class="section-title">Built for the constraints of federal IT</div>
+            <div class="section-body">Commercial deployment platforms aren't built for air-gapped SCIFs, CAC authentication, or eMASS evidence packages. ECHELON is.</div>
+        </div>
+        <div class="grid-3">
+            <div class="card accent-top">
+                <div class="card-label">Classification</div>
+                <h3>IL2 through IL6</h3>
+                <p>Supports Unclassified, CUI, and Secret workloads with enforced separation between classification domains. CDS guards prevent unauthorized data flow between Impact Levels.</p>
+            </div>
+            <div class="card accent-top">
+                <div class="card-label">Connectivity</div>
+                <h3>Air-gap capable</h3>
+                <p>Operates fully disconnected. Updates are packaged, cryptographically signed, transferred via approved media, and hash-verified on receipt before any deployment begins.</p>
+            </div>
+            <div class="card accent-top">
+                <div class="card-label">Architecture</div>
+                <h3>Zero trust throughout</h3>
+                <p>No implicit trust between services — anywhere in the fleet. Identity derived from workload certificates (SPIFFE/SPIRE), not network location. Deny-by-default at every boundary.</p>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Impact Level Segmentation</div>
+            <div class="section-title">DoD IL2 through IL6 — enforced at every layer</div>
+            <div class="section-body">Workloads are deployed to the correct IL enclave and cannot cross boundaries without an explicit, audited authorization.</div>
+        </div>
+        <div class="compliance-wrap">
+            <table class="compliance-table">
+                <thead>
+                    <tr>
+                        <th>Impact Level</th>
+                        <th>Data classification</th>
+                        <th>Environment</th>
+                        <th>Key requirements</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="il il-2">IL2</span> Unclassified</td>
+                        <td>Public and non-sensitive federal data</td>
+                        <td>Commercial cloud (AWS GovCloud, Azure Gov)</td>
+                        <td>FedRAMP Moderate baseline; standard TLS; public-facing portals</td>
+                    </tr>
+                    <tr>
+                        <td><span class="il il-4">IL4</span> CUI</td>
+                        <td>Controlled Unclassified Information</td>
+                        <td>Dedicated GovCloud regions only</td>
+                        <td>FedRAMP High + DoD SRG; CMMC Level 2; CAC authentication</td>
+                    </tr>
+                    <tr>
+                        <td><span class="il il-5">IL5</span> National Security</td>
+                        <td>DoD mission-critical unclassified</td>
+                        <td>DoD-authorized CSPs only</td>
+                        <td>FedRAMP High + DoD SRG IL5; CMMC Level 3; FIPS 140-2</td>
+                    </tr>
+                    <tr>
+                        <td><span class="il il-6">IL6</span> Secret</td>
+                        <td>Classified — Secret level</td>
+                        <td>Air-gapped or SIPR-connected only</td>
+                        <td>DISA-approved CSPs; physical media; two-person integrity; HSM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Control Plane</div>
+            <div class="section-title">GovCloud or on-premises classified enclave</div>
+        </div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>Kubernetes Master Cluster</h3>
+                <ul>
+                    <li>Deployed in AWS GovCloud or on-prem classified enclave</li>
+                    <li>DISA STIG-hardened node OS (RHEL / OpenShift)</li>
+                    <li>FIPS 140-2 validated cryptographic modules throughout</li>
+                    <li>CAC / PIV card authentication enforced at cluster level</li>
+                    <li>Encrypted etcd with NSA Suite B algorithm compliance</li>
+                    <li>HSM-backed key management for all secrets</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>ECHELON Control</h3>
+                <ul>
+                    <li>Policy engine — NIST 800-53 and CMMC controls enforced automatically</li>
+                    <li>STIG compliance scan on every artifact — non-compliant builds blocked</li>
+                    <li>Live dashboard — all agency and field site nodes in real time</li>
+                    <li>GitOps trail feeds directly into eMASS accreditation packages</li>
+                    <li>Rollback per-node or program-office-wide in seconds</li>
+                    <li>Continuous monitoring posture reported to SIEM automatically</li>
+                </ul>
+            </div>
+        </div>
+        <div class="chip-row">
+            <span class="chip accent">OpenShift (STIG-hardened)</span>
+            <span class="chip accent">ArgoCD</span>
+            <span class="chip accent">Vault (FIPS mode)</span>
+            <span class="chip accent">OPA / Gatekeeper</span>
+            <span class="chip accent">Falco</span>
+            <span class="chip accent">Anchore (STIG scan)</span>
+            <span class="chip">Splunk SIEM</span>
+            <span class="chip">eMASS integration</span>
+            <span class="chip">CAC / PIV Auth</span>
+            <span class="chip">SPIFFE / SPIRE</span>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Deployment Pipeline</div>
+            <div class="section-title">ATO-compatible — evidence generated at every step</div>
+            <div class="section-body">Every stage produces artifacts that feed directly into the Authority to Operate package. Compliance is not documented after the fact — it is built into the process.</div>
+        </div>
+        <div class="pipeline-wrap">
+            <div class="pipeline-track">
+                <div class="pipeline-step">
+                    <div class="step-num">[01]</div>
+                    <div class="step-name">Build</div>
+                    <ul class="step-items">
+                        <li>STIG-hardened base image</li>
+                        <li>FIPS-validated toolchain</li>
+                        <li>SBOM generated</li>
+                        <li>Dependency audit</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[02]</div>
+                    <div class="step-name">Scan</div>
+                    <ul class="step-items">
+                        <li>CVE and STIG compliance scan</li>
+                        <li>Image signed via cosign</li>
+                        <li>CMMC control validation</li>
+                        <li>eMASS artifact generated</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[03]</div>
+                    <div class="step-name">Stage</div>
+                    <ul class="step-items">
+                        <li>Canary to test enclave</li>
+                        <li>Regression and smoke tests</li>
+                        <li>AO approval gate (optional)</li>
+                        <li>Auto-promote or abort</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[04]</div>
+                    <div class="step-name">Transfer</div>
+                    <ul class="step-items">
+                        <li>Push to accredited registry</li>
+                        <li>Air-gap: signed media export</li>
+                        <li>Hash verified on receipt</li>
+                        <li>GitOps manifest sync</li>
+                    </ul>
+                </div>
+                <div class="pipeline-step">
+                    <div class="step-num">[05]</div>
+                    <div class="step-name">Release</div>
+                    <ul class="step-items">
+                        <li>Rolling deploy by IL level</li>
+                        <li>Zero-downtime switchover</li>
+                        <li>Health gates each wave</li>
+                        <li>Instant rollback on failure</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pipeline-footer">
+                Every step produces eMASS-consumable artifacts · ATO evidence is a byproduct of normal operations · No untracked changes possible
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Zero Trust Network</div>
+            <div class="section-title">FIPS mTLS — identity-based, not network-based</div>
+            <div class="section-body">Aligned with Executive Order 14028 and the DoD Zero Trust Reference Architecture. Every request authenticated, authorized, and logged — regardless of where it originates.</div>
+        </div>
+        <div class="mesh-grid">
+            <div class="mesh-item">
+                <div class="mesh-item-title">FIPS mTLS</div>
+                <div class="mesh-item-desc">FIPS 140-2 validated encryption on all inter-service traffic. Meets NSA cryptographic requirements for CUI and classified workloads.</div>
+            </div>
+            <div class="mesh-item">
+                <div class="mesh-item-title">SPIFFE Identity</div>
+                <div class="mesh-item-desc">Workload identity via SPIFFE/SPIRE. No static credentials. Identity cryptographically bound to the workload, not the network.</div>
+            </div>
+            <div class="mesh-item">
+                <div class="mesh-item-title">Deny by Default</div>
+                <div class="mesh-item-desc">All service communication blocked unless explicitly authorized via policy. Lateral movement is architecturally prevented, not just monitored.</div>
+            </div>
+            <div class="mesh-item">
+                <div class="mesh-item-title">Continuous ATO</div>
+                <div class="mesh-item-desc">Real-time compliance posture fed to eMASS and SIEM automatically. ATO maintenance is a live process, not a point-in-time assessment.</div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Edge Nodes</div>
+            <div class="section-title">Agency sites, field units, and classified enclaves</div>
+            <div class="section-body">Each site runs a local Kubernetes cluster at the appropriate IL level. Sites operate autonomously during network interruptions and sync when connectivity is restored.</div>
+        </div>
+        <div class="node-block">
+            <div class="node-block-header">
+                <span>Deployed sites</span>
+                <span class="count">Scales to any number of locations</span>
+            </div>
+            <div class="node-row">
+                <div class="node-item">
+                    <div class="node-status"></div>
+                    <div class="node-name">Program Office</div>
+                    <div class="node-sub">Pentagon · IL5 · SIPR-connected</div>
+                    <div class="node-badge">Local Kubernetes</div>
+                    <ul>
+                        <li>Mission planning applications</li>
+                        <li>Secure document management</li>
+                        <li>CAC-authenticated user access</li>
+                        <li>Continuous STIG compliance scan</li>
+                        <li>SIPR-connected data feeds</li>
+                    </ul>
+                </div>
+                <div class="node-item">
+                    <div class="node-status"></div>
+                    <div class="node-name">Field Site</div>
+                    <div class="node-sub">Camp Pendleton · IL4 · Air-gap capable</div>
+                    <div class="node-badge">Local Kubernetes</div>
+                    <ul>
+                        <li>Logistics and supply chain apps</li>
+                        <li>Disconnected / air-gapped mode</li>
+                        <li>Updates via signed physical media</li>
+                        <li>Hash-verified artifact receipt</li>
+                        <li>Auto-sync on reconnect</li>
+                    </ul>
+                </div>
+                <div class="node-item">
+                    <div class="node-status offline"></div>
+                    <div class="node-name">SCIF Enclave</div>
+                    <div class="node-sub">Classified facility · IL6 · Air-gapped</div>
+                    <div class="node-badge">Local Kubernetes</div>
+                    <ul>
+                        <li>Secret-level mission workloads</li>
+                        <li>Fully air-gapped — no internet path</li>
+                        <li>Physical media update process</li>
+                        <li>Two-person integrity for deploys</li>
+                        <li>HSM-backed key management</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="node-more">Scales to hundreds of agency sites, field units, and enclaves — each managed at its authorized Impact Level</div>
+        </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section">
+        <div class="section-head">
+            <div class="section-label">Compliance</div>
+            <div class="section-title">Accreditation frameworks — built in, not bolted on</div>
+        </div>
+        <div class="compliance-wrap">
+            <table class="compliance-table">
+                <thead>
+                    <tr>
+                        <th>Framework</th>
+                        <th>How ECHELON satisfies it</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CMMC Level 2 / 3</td>
+                        <td>All 110 NIST SP 800-171 practices enforced via OPA policy-as-code. Evidence artifacts auto-generated per practice. Access control, audit logging, incident response, and configuration management built into the platform baseline.</td>
+                    </tr>
+                    <tr>
+                        <td>FedRAMP High / DoD SRG</td>
+                        <td>NIST 800-53 Rev 5 controls enforced at runtime via admission controllers. Continuous monitoring feeds to eMASS and SIEM. Boundary protection via zero trust mesh. Supply chain risk satisfied by signed artifacts and SBOM generation.</td>
+                    </tr>
+                    <tr>
+                        <td>DISA STIGs</td>
+                        <td>STIG-hardened base images for all containers and node OS. Automated STIG compliance scan (Anchore) on every build — non-compliant artifacts blocked before staging. XCCDF / OVAL results archived per deployment.</td>
+                    </tr>
+                    <tr>
+                        <td>Zero Trust (EO 14028)</td>
+                        <td>Deny-by-default network policy. Identity derived from SPIFFE workload certificates, not network location. All access logged. Microsegmentation enforced at the mesh layer. Aligns to DoD ZT Reference Architecture pillars: Identity, Devices, Networks, Applications, Data.</td>
+                    </tr>
+                    <tr>
+                        <td>NIST SP 800-53</td>
+                        <td>Controls mapped to platform: AC (RBAC/CAC), AU (immutable GitOps log), CM (policy-as-code), IR (SIEM + rollback), SI (CVE scanning + Falco runtime detection).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="chip-row">
+            <span class="chip">CMMC L2 / L3</span>
+            <span class="chip">FedRAMP High</span>
+            <span class="chip">NIST 800-53</span>
+            <span class="chip">NIST 800-171</span>
+            <span class="chip">DISA STIG</span>
+            <span class="chip">DoD SRG IL2–IL6</span>
+            <span class="chip">FIPS 140-2</span>
+            <span class="chip">Zero Trust EO 14028</span>
+            <span class="chip">eMASS</span>
+            <span class="chip">FISMA</span>
+        </div>
+    </div>
+
+</div>
+
+<div class="page-footer">
+    <span>Echelon · Government Contracting · Confidential</span>
+    <span class="footer-status">All systems operational</span>
+</div>
+
+</body>
+</html>
